@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2014 | Gavin&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title">
+<meta name="og:url" content="http://blog.ligan.me/archives/2014/">
+<meta name="og:image">
+<meta name="og:site_name" content="Gavin's Blog">
+<meta name="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="flypiggy">
+  
+    <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-35413718-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <script type="text/javascript">
+    var num = Math.ceil( Math.random() * 3);
+    document.getElementById("banner").style.background = "url('css/images/banner"+num+".jpg') center #000";
+    document.getElementById("banner").style.backgroundSize = "cover";
+  </script>
+
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Gavin&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Programming (cdr (life))</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://blog.ligan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/" class="article-date">
+  <time datetime="2014-03-02T04:09:23.000Z" itemprop="datePublished">Mar 2 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/工具/">工具</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/">使用oh-my-zsh内置插件省略bundle exec</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="bundle_exec">bundle exec</h2>
+<p>在使用bundler管理的项目中,为了统一使用环境,经常要使用<code>bundle exec</code>来执行项目中的各种命令.</p>
+<p>比如在某些项目中使用的是rake 0.9而系统中安装有rake 10时候如果不加上<code>bundle exec</code>就会提示错误.这时候就需要执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>bundle <span class="keyword">exec</span> rake <span class="keyword">my</span>:task
+</pre></td></tr></table></figure>
+
+<p>以前使用rvm时可以通过每个项目不同的gemset来统一项目中不同版本的gem.换了rbenv之后完全依靠bunder来管理gem之后每次执行<code>bundle exec</code>就有点麻烦了.</p>
+<p>有一些工具可以代替<code>bundle exec</code>,比如<a href="https://github.com/gma/bundler-exec" target="_blank">bundler-exec</a></p>
+<p>但是如果正好使用oh-my-zsh的话,则有一个更简单的方法</p>
+<h2 id="oh-my-zsh">oh-my-zsh</h2>
+<p>oh-my-zsh现在已经几乎成为了标配,这里不做介绍,如果你没有使用它,可以到这里查看<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank">oh-my-zsh</a></p>
+<p>只需要在<code>.zshrc</code>中的找到这一行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="attribute">plugins</span>=<span class="string">(git bundler)</span>
+</pre></td></tr></table></figure>
+
+<p>plugins中加入bundler,绝大部分情况下就不需要再手动敲上<code>bundle exec</code>了.</p>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/bundler/bundler.plugin.zsh#L9" target="_blank">源码看这里</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.ligan.me/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/" data-id="zjhlzzagnf3gv4sv" class="article-share-link">Share</a>
+      
+        <a href="http://blog.ligan.me/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/">Ruby</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/工具/">工具</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/测试/">测试</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲聊/">闲聊</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03">March 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09">September 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01">January 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10">October 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Gavin<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'flypiggys';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>

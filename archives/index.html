@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives | Gavin&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title">
+<meta name="og:url" content="http://blog.ligan.me/archives/">
+<meta name="og:image">
+<meta name="og:site_name" content="Gavin's Blog">
+<meta name="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="flypiggy">
+  
+    <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-35413718-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <script type="text/javascript">
+    var num = Math.ceil( Math.random() * 3);
+    document.getElementById("banner").style.background = "url('css/images/banner"+num+".jpg') center #000";
+    document.getElementById("banner").style.backgroundSize = "cover";
+  </script>
+
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Gavin&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Programming (cdr (life))</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://blog.ligan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/" class="article-date">
+  <time datetime="2014-03-02T04:09:23.000Z" itemprop="datePublished">Mar 2 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/工具/">工具</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/">使用oh-my-zsh内置插件省略bundle exec</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="bundle_exec">bundle exec</h2>
+<p>在使用bundler管理的项目中,为了统一使用环境,经常要使用<code>bundle exec</code>来执行项目中的各种命令.</p>
+<p>比如在某些项目中使用的是rake 0.9而系统中安装有rake 10时候如果不加上<code>bundle exec</code>就会提示错误.这时候就需要执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>bundle <span class="keyword">exec</span> rake <span class="keyword">my</span>:task
+</pre></td></tr></table></figure>
+
+<p>以前使用rvm时可以通过每个项目不同的gemset来统一项目中不同版本的gem.换了rbenv之后完全依靠bunder来管理gem之后每次执行<code>bundle exec</code>就有点麻烦了.</p>
+<p>有一些工具可以代替<code>bundle exec</code>,比如<a href="https://github.com/gma/bundler-exec" target="_blank">bundler-exec</a></p>
+<p>但是如果正好使用oh-my-zsh的话,则有一个更简单的方法</p>
+<h2 id="oh-my-zsh">oh-my-zsh</h2>
+<p>oh-my-zsh现在已经几乎成为了标配,这里不做介绍,如果你没有使用它,可以到这里查看<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank">oh-my-zsh</a></p>
+<p>只需要在<code>.zshrc</code>中的找到这一行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="attribute">plugins</span>=<span class="string">(git bundler)</span>
+</pre></td></tr></table></figure>
+
+<p>plugins中加入bundler,绝大部分情况下就不需要再手动敲上<code>bundle exec</code>了.</p>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/bundler/bundler.plugin.zsh#L9" target="_blank">源码看这里</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.ligan.me/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/" data-id="zjhlzzagnf3gv4sv" class="article-share-link">Share</a>
+      
+        <a href="http://blog.ligan.me/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-rspec-feature-ce-shi-jian-jie" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/09/08/rspec-feature-ce-shi-jian-jie/" class="article-date">
+  <time datetime="2013-09-08T07:55:00.000Z" itemprop="datePublished">Sep 8 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/测试/">测试</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/09/08/rspec-feature-ce-shi-jian-jie/">rspec中使用feature spec进行用户/验收测试</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="feature_spec与request_spec的区别">feature spec与request spec的区别</h2>
+<p>rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.</p>
+<p>feature spec在测试中来说是比较高等级的测试.大概相当于集成测试或者更高级别的用户/验收测试.一般是模拟用户的实际操作和应用外部的请求来执行测试.简单来说就是模拟浏览器中的动作,期待应用正确的反应.</p>
+<p>为什么2.0之后的capybara要做出这样的改动呢?</p>
+<p>因为一般的来说capybara是模拟浏览器中的动作,这种测试是相当于模拟一个用户在用户界面中的操作,是基于usercase的.而以前的request spec则还是没有脱离应用层面(发送http请求,比较相应结果),比如在以前的capybara的dsl中,使用’get’来访问页面,而现在则改成了’visit’.后者’访问’这个动作,比’get’这个http请求更接近于用户的行为.</p>
+<p>所以使用feature spec相对来说更符合behavior的思想,也带来更好的阅读性.</p>
+<p>
+        
+          <p class="article-more-link">
+            <a href="/2013/09/08/rspec-feature-ce-shi-jian-jie/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/" data-id="tw839gxp9tqoa25z" class="article-share-link">Share</a>
+      
+        <a href="http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-using-rvm-manage-your-gems" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/09/05/using-rvm-manage-your-gems/" class="article-date">
+  <time datetime="2013-09-04T17:42:00.000Z" itemprop="datePublished">Sep 5 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/工具/">工具</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/09/05/using-rvm-manage-your-gems/">使用rvm更好的管理你的gem</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="rvm一个重要的功能_gemset">rvm一个重要的功能 gemset</h2>
+<p>rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.<strong>gemset本身也有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv</strong></p>
+<p>而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.</p>
+<h2 id="gemset基本使用">gemset基本使用</h2>
+<p>先从gemset基本使用开始讲起<br><br>我们平时使用rvm不指定gemset时,默认使用的是当前ruby版本下的default gemset,如<code>2.0@default</code>.如果想创建自己的gemset则使用</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>╭─<span class="constant">Gavin</span><span class="variable">@ligan</span>  ~ ‹ruby-<span class="number">2.0</span>.<span class="number">0</span>›
+╰─<span class="variable">$ </span>rvm gemset create rails4
+ <span class="constant">Gemset</span> <span class="string">'rails40'</span> created.
+</pre></td></tr></table></figure>
+
+<p>这样我们就拥有了一个gemset “rails40”,想要将该gemset设为默认gemset则使用</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>╭─Gavin<span class="property">@ligan</span>  ~ ‹ruby-<span class="number">2.0</span><span class="number">.0</span>›
+╰─$ rvm use <span class="number">2.0</span><span class="property">@rails4</span> --<span class="reserved">default</span>
+ Using <span class="regexp">/Users/Gavin/</span>.rvm/gems/ruby-<span class="number">2.0</span><span class="number">.0</span>-p247 <span class="reserved">with</span> gemset rails4
+</pre></td></tr></table></figure>
+
+<p>以上命令可以简化为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="comment">$</span> <span class="comment">rvm</span> <span class="comment">use</span> <span class="comment">2</span><span class="string">.</span><span class="comment">0@rails4</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">default</span>
+</pre></td></tr></table></figure>
+
+<p>我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看<a href="http://rvm.io/" target="_blank">文档</a><br>
+        
+          <p class="article-more-link">
+            <a href="/2013/09/05/using-rvm-manage-your-gems/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/" data-id="f663ctce6rkyiz0x" class="article-share-link">Share</a>
+      
+        <a href="http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-zsh-alias-with-parameters" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/01/06/zsh-alias-with-parameters/" class="article-date">
+  <time datetime="2013-01-06T14:01:00.000Z" itemprop="datePublished">Jan 6 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/01/06/zsh-alias-with-parameters/">zsh alias with parameters</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。如</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>pandoc <span class="built_in">list</span><span class="built_in">.</span>markdown <span class="attribute">-t</span> html <span class="attribute">-o</span> <span class="built_in">list</span><span class="built_in">.</span>markdown<span class="built_in">.</span>html
+</pre></td></tr></table></figure>
+
+<p>想要省掉一堆-t html -o 什么的参数，最好是我只需要输入</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>pd 文件名
+</pre></td></tr></table></figure>
+
+<p>就可以完成转换，zsh在alias中加参数的方法稍微有些不一样，查看zsh文档的一堆废话后（csh中怎么写的，zsh和csh不一样，balabala），在.zshrc中加入</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="function"><span class="title">pd</span></span>() { pandoc <span class="string">"<span class="variable">$1</span>"</span> -t html -o <span class="string">"<span class="variable">$1</span>"</span>.html; }
+</pre></td></tr></table></figure>
+
+<p>之后试验一下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
+╰─<span class="variable">$ </span>ls
+list.md
+╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
+╰─<span class="variable">$ </span>pd list.md
+╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
+╰─<span class="variable">$ </span>ls
+list.md  list.md.html
+</pre></td></tr></table></figure>
+
+<p>大功告成</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/" data-id="o4v0241ywsrz9y1s" class="article-share-link">Share</a>
+      
+        <a href="http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jiu-zhe-yao-dao-liao-2013nian-liao" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/" class="article-date">
+  <time datetime="2013-01-03T11:51:00.000Z" itemprop="datePublished">Jan 3 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/闲聊/">闲聊</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/">就这么到了2013年了</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="2012_过去了">2012 过去了</h2>
+<p>世界末日没来，依然没有成为高富帅，被逼着裸婚了，学习没有长进，又浪费了一年</p>
+<p><br></p>
+<h2 id="2013_也立个目标吧">2013 也立个目标吧</h2>
+<ul>
+<li>找份喜欢的工作</li>
+<li>不和傻逼为伍</li>
+<li>远离monkey test</li>
+</ul>
+<p>对了，还有开始写blog</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/" data-id="vuoxp80oatrsccwq" class="article-share-link">Share</a>
+      
+        <a href="http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-first-blood" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/10/01/first-blood/" class="article-date">
+  <time datetime="2012-10-01T13:50:00.000Z" itemprop="datePublished">Oct 1 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/闲聊/">闲聊</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/10/01/first-blood/">First Blood</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>卖个萌,over</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.ligan.me/2012/10/01/first-blood/" data-id="7mzcz0r5x6k8unna" class="article-share-link">Share</a>
+      
+        <a href="http://blog.ligan.me/2012/10/01/first-blood/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/">Ruby</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/工具/">工具</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/测试/">测试</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲聊/">闲聊</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03">March 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09">September 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01">January 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10">October 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Gavin<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'flypiggys';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>
