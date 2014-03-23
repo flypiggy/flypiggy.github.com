@@ -17,7 +17,7 @@
     <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/x-ico" href="/favicon.ico">
   
   <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -36,6 +36,7 @@
 </script>
 
 </head>
+
 <body>
   <div id="container">
     <div id="wrap">
@@ -83,68 +84,36 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/" class="article-date">
-  <time datetime="2014-03-02T04:09:23.000Z" itemprop="datePublished">Mar 2 2014</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2014" class="archive-year">2014</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/" class="archive-article-date">
+  <time datetime="2014-03-02T04:09:23.000Z" itemprop="datePublished">Mar 2</time>
 </a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/工具/">工具</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+      
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/">使用oh-my-zsh内置插件省略bundle exec</a>
+      <a class="archive-article-title" href="/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/">使用oh-my-zsh内置插件省略bundle exec</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="bundle_exec">bundle exec</h2>
-<p>在使用bundler管理的项目中,为了统一使用环境,经常要使用<code>bundle exec</code>来执行项目中的各种命令.</p>
-<p>比如在某些项目中使用的是rake 0.9而系统中安装有rake 10时候如果不加上<code>bundle exec</code>就会提示错误.这时候就需要执行</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>bundle <span class="keyword">exec</span> rake <span class="keyword">my</span>:task
-</pre></td></tr></table></figure>
-
-<p>以前使用rvm时可以通过每个项目不同的gemset来统一项目中不同版本的gem.换了rbenv之后完全依靠bunder来管理gem之后每次执行<code>bundle exec</code>就有点麻烦了.</p>
-<p>有一些工具可以代替<code>bundle exec</code>,比如<a href="https://github.com/gma/bundler-exec" target="_blank">bundler-exec</a></p>
-<p>但是如果正好使用oh-my-zsh的话,则有一个更简单的方法</p>
-<h2 id="oh-my-zsh">oh-my-zsh</h2>
-<p>oh-my-zsh现在已经几乎成为了标配,这里不做介绍,如果你没有使用它,可以到这里查看<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank">oh-my-zsh</a></p>
-<p>只需要在<code>.zshrc</code>中的找到这一行</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="attribute">plugins</span>=<span class="string">(git bundler)</span>
-</pre></td></tr></table></figure>
-
-<p>plugins中加入bundler,绝大部分情况下就不需要再手动敲上<code>bundle exec</code>了.</p>
-<p><a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/bundler/bundler.plugin.zsh#L9" target="_blank">源码看这里</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a><a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a></div>
-      <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["douban","sqq","diandian","huaban","youdao","ff","wealink","xg","ty","deli","linkedin","copy","print"],"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["tsina","twi","fbook","weixin","renren"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-     
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bundler/">bundler</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ruby/">ruby</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
 </article>
-
-
-
   
+  
+    </div></section>
   
 </section>
         
@@ -175,6 +144,9 @@
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03">March 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09">September 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01">January 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10">October 2012</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
+
+  
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=1&isTitle=1&noborder=0&isWeibo=1&isFans=0&uid=1683685805&verifier=a9665210&dpc=1"></iframe>
 
   
 </aside>
