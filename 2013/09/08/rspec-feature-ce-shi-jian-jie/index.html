@@ -157,9 +157,15 @@ group <span class="symbol">:test</span> <span class="keyword">do</span>
 3
 4
 5
-</pre></td><td class="code"><pre>describe <span class="string">"Static pages"</span> <span class="keyword">do</span>
-  describe <span class="string">"Home page"</span> <span class="keyword">do</span>
-    it <span class="string">"should have the content 'Sample App'"</span>
+6
+7
+8
+</pre></td><td class="code"><pre>describe <span class="string">'Static pages'</span> <span class="keyword">do</span>
+  describe <span class="string">'Home page'</span> <span class="keyword">do</span>
+    it <span class="string">"should have the content 'Sample App'"</span> <span class="keyword">do</span>
+      visit <span class="string">'/static_pages/home'</span>
+      expect(page).to have_content(<span class="string">'Sample App'</span>)
+    <span class="keyword">end</span>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </pre></td></tr></table></figure>
@@ -209,32 +215,26 @@ group <span class="symbol">:test</span> <span class="keyword">do</span>
 19
 20
 21
-22
-23
-24
 </pre></td><td class="code"><pre><span class="keyword">require</span> <span class="string">"spec_helper"</span>
 
-feature <span class="string">"Login"</span> <span class="keyword">do</span>
-  scenario <span class="string">"User enter right account"</span> <span class="keyword">do</span>
-    visit <span class="string">"/login"</span>
+feature <span class="string">'Login'</span> <span class="keyword">do</span>
+  scenario <span class="string">'User enter right account'</span> <span class="keyword">do</span>    
+    visit <span class="string">'/login'</span>
+    fill_in <span class="string">'Name'</span>, <span class="symbol">:with</span> =&gt; <span class="string">'username'</span>
+    fill_in <span class="string">'Password'</span>, <span class="symbol">:with</span> =&gt; <span class="string">'right'</span>
+    click_button <span class="string">'login'</span>
 
-    fill_in <span class="string">"Name"</span>, <span class="symbol">:with</span> =&gt; <span class="string">"username"</span>
-    fill_in <span class="string">"Password"</span>, <span class="symbol">:with</span> =&gt; <span class="string">"right"</span>
-    click_button <span class="string">"login"</span>
-
-    expect(page).to have_text(<span class="string">"welcome back,username"</span>)
+    expect(page).to have_text(<span class="string">'welcome back,username'</span>)      
   <span class="keyword">end</span>
 
-  scenario <span class="string">"User enter wrong account"</span> <span class="keyword">do</span>
-    visit <span class="string">"/login"</span>
+  scenario <span class="string">'User enter wrong account'</span> <span class="keyword">do</span>
+    visit <span class="string">'/login'</span>
+    fill_in <span class="string">'Name'</span>, <span class="symbol">with:</span> <span class="string">'username'</span>
+    fill_in <span class="string">'Password'</span>, <span class="symbol">with:</span> <span class="string">'wrong'</span>
+    click_button <span class="string">'login'</span>
 
-    fill_in <span class="string">"Name"</span>, <span class="symbol">:with</span> =&gt; <span class="string">"username"</span>
-    fill_in <span class="string">"Password"</span>, <span class="symbol">:with</span> =&gt; <span class="string">"wrong"</span>
-    click_button <span class="string">"login"</span>
-
-    expect(page).to have_text(<span class="string">"Wrong password,please try again!"</span>)
+    expect(page).to have_text(<span class="string">'Wrong password,pl"""ase try again!'</span>)
   <span class="keyword">end</span>
-
 <span class="keyword">end</span>
 </pre></td></tr></table></figure>
 
@@ -243,9 +243,9 @@ feature <span class="string">"Login"</span> <span class="keyword">do</span>
       
     </div>
     <footer class="article-footer">
-      <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a><a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-      <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["tsina","twi","fbook","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-      
+      <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a><a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a></div>
+      <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["douban","sqq","diandian","huaban","youdao","ff","wealink","xg","ty","deli","linkedin","copy","print"],"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["tsina","twi","fbook","weixin","renren"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+     
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/capybara/">capybara</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rspec/">rspec</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
 
     </footer>
