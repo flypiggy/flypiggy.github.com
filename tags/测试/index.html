@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2013/1 | Gavin&#39;s Blog</title>
+  <title>Tag: 测试 | Gavin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="og:type" content="blog">
 <meta name="og:title">
-<meta name="og:url" content="http://blog.ligan.me/archives/2013/01/">
+<meta name="og:url" content="http://blog.ligan.me/tags/测试/">
 <meta name="og:image">
 <meta name="og:site_name" content="Gavin's Blog">
 <meta name="og:description">
@@ -83,55 +83,60 @@
       <div class="outer">
         <section id="main">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2013" class="archive-year">2013</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2013/01/06/zsh-alias-with-parameters/" class="archive-article-date">
-  <time datetime="2013-01-06T14:01:00.000Z" itemprop="datePublished">Jan 6</time>
+    <article id="post-rspec-feature-ce-shi-jian-jie" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/09/08/rspec-feature-ce-shi-jian-jie/" class="article-date">
+  <time datetime="2013-09-08T07:55:00.000Z" itemprop="datePublished">Sep 8 2013</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/测试/">测试</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2013/01/06/zsh-alias-with-parameters/">zsh alias with parameters</a>
+      <a class="article-title" href="/2013/09/08/rspec-feature-ce-shi-jian-jie/">rspec中使用feature spec进行用户/验收测试</a>
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/" class="archive-article-date">
-  <time datetime="2013-01-03T11:51:00.000Z" itemprop="datePublished">Jan 3</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/">就这么到了2013年了</a>
-    </h1>
-  
+        <h2 id="feature_spec与request_spec的区别">feature spec与request spec的区别</h2>
+<p>rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.</p>
+<p>feature spec在测试中来说是比较高等级的测试.大概相当于集成测试或者更高级别的用户/验收测试.一般是模拟用户的实际操作和应用外部的请求来执行测试.简单来说就是模拟浏览器中的动作,期待应用正确的反应.</p>
+<p>为什么2.0之后的capybara要做出这样的改动呢?</p>
+<p>因为一般的来说capybara是模拟浏览器中的动作,这种测试是相当于模拟一个用户在用户界面中的操作,是基于usercase的.而以前的request spec则还是没有脱离应用层面(发送http请求,比较相应结果),比如在以前的capybara的dsl中,使用’get’来访问页面,而现在则改成了’visit’.后者’访问’这个动作,比’get’这个http请求更接近于用户的行为.</p>
+<p>所以使用feature spec相对来说更符合behavior的思想,也带来更好的阅读性.</p>
+<p>
+        
+          <p class="article-more-link">
+            <a href="/2013/09/08/rspec-feature-ce-shi-jian-jie/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a><a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+      <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["tsina","twi","fbook","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/capybara/">capybara</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rspec/">rspec</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
 </article>
+
+
+
   
-  
-    </div></section>
   
 </section>
         

@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2013/1 | Gavin&#39;s Blog</title>
+  <title>Tag: rvm | Gavin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="og:type" content="blog">
 <meta name="og:title">
-<meta name="og:url" content="http://blog.ligan.me/archives/2013/01/">
+<meta name="og:url" content="http://blog.ligan.me/tags/rvm/">
 <meta name="og:image">
 <meta name="og:site_name" content="Gavin's Blog">
 <meta name="og:description">
@@ -83,55 +83,81 @@
       <div class="outer">
         <section id="main">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2013" class="archive-year">2013</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2013/01/06/zsh-alias-with-parameters/" class="archive-article-date">
-  <time datetime="2013-01-06T14:01:00.000Z" itemprop="datePublished">Jan 6</time>
+    <article id="post-using-rvm-manage-your-gems" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/09/05/using-rvm-manage-your-gems/" class="article-date">
+  <time datetime="2013-09-04T17:42:00.000Z" itemprop="datePublished">Sep 5 2013</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/工具/">工具</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2013/01/06/zsh-alias-with-parameters/">zsh alias with parameters</a>
+      <a class="article-title" href="/2013/09/05/using-rvm-manage-your-gems/">使用rvm更好的管理你的gem</a>
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/" class="archive-article-date">
-  <time datetime="2013-01-03T11:51:00.000Z" itemprop="datePublished">Jan 3</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/">就这么到了2013年了</a>
-    </h1>
-  
+        <h2 id="rvm一个重要的功能_gemset">rvm一个重要的功能 gemset</h2>
+<p>rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.<strong>gemset本身也有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv</strong></p>
+<p>而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.</p>
+<h2 id="gemset基本使用">gemset基本使用</h2>
+<p>先从gemset基本使用开始讲起<br><br>我们平时使用rvm不指定gemset时,默认使用的是当前ruby版本下的default gemset,如<code>2.0@default</code>.如果想创建自己的gemset则使用</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>╭─<span class="constant">Gavin</span><span class="variable">@ligan</span>  ~ ‹ruby-<span class="number">2.0</span>.<span class="number">0</span>›
+╰─<span class="variable">$ </span>rvm gemset create rails4
+ <span class="constant">Gemset</span> <span class="string">'rails40'</span> created.
+</pre></td></tr></table></figure>
 
-    </header>
+<p>这样我们就拥有了一个gemset “rails40”,想要将该gemset设为默认gemset则使用</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>╭─Gavin<span class="property">@ligan</span>  ~ ‹ruby-<span class="number">2.0</span><span class="number">.0</span>›
+╰─$ rvm use <span class="number">2.0</span><span class="property">@rails4</span> --<span class="reserved">default</span>
+ Using <span class="regexp">/Users/Gavin/</span>.rvm/gems/ruby-<span class="number">2.0</span><span class="number">.0</span>-p247 <span class="reserved">with</span> gemset rails4
+</pre></td></tr></table></figure>
+
+<p>以上命令可以简化为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="comment">$</span> <span class="comment">rvm</span> <span class="comment">use</span> <span class="comment">2</span><span class="string">.</span><span class="comment">0@rails4</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">default</span>
+</pre></td></tr></table></figure>
+
+<p>我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看<a href="http://rvm.io/" target="_blank">文档</a><br>
+        
+          <p class="article-more-link">
+            <a href="/2013/09/05/using-rvm-manage-your-gems/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a><a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+      <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["tsina","twi","fbook","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gem/">gem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ruby/">ruby</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rvm/">rvm</a></li></ul>
+
+    </footer>
   </div>
+  
 </article>
+
+
+
   
-  
-    </div></section>
   
 </section>
         

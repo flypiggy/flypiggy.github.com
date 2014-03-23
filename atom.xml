@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Programming (cdr (life))]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.ligan.me/"/>
-  <updated>2014-03-23T06:05:16.978Z</updated>
+  <updated>2014-03-23T06:20:42.562Z</updated>
   <id>http://blog.ligan.me/</id>
   
   <author>
@@ -53,7 +53,7 @@
     <link href="http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/"/>
     <id>http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/</id>
     <published>2013-09-08T07:55:00.000Z</published>
-    <updated>2014-03-22T16:43:17.000Z</updated>
+    <updated>2014-03-23T06:14:14.000Z</updated>
     <content type="html"><![CDATA[<h2 id="feature_spec与request_spec的区别">feature spec与request spec的区别</h2>
 <p>rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.</p>
 <p>feature spec在测试中来说是比较高等级的测试.大概相当于集成测试或者更高级别的用户/验收测试.一般是模拟用户的实际操作和应用外部的请求来执行测试.简单来说就是模拟浏览器中的动作,期待应用正确的反应.</p>
@@ -102,15 +102,9 @@ group <span class="symbol">:test</span> <span class="keyword">do</span>
 3
 4
 5
-6
-7
-8
 </pre></td><td class="code"><pre>describe <span class="string">"Static pages"</span> <span class="keyword">do</span>
   describe <span class="string">"Home page"</span> <span class="keyword">do</span>
-    it <span class="string">"should have the content 'Sample App'"</span> <span class="keyword">do</span>
-      visit <span class="string">'/static_pages/home'</span>
-      expect(page).to have_content(<span class="string">'Sample App'</span>)
-    <span class="keyword">end</span>
+    it <span class="string">"should have the content 'Sample App'"</span>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </pre></td></tr></table></figure>
@@ -199,6 +193,12 @@ feature <span class="string">"Login"</span> <span class="keyword">do</span>
 <p>所以使用feature spec相对来说更符合behavior的思想,也带来更好的阅读性.</p>
 <p>]]></summary>
     
+      <category term="测试" scheme="http://blog.ligan.me/tags/%E6%B5%8B%E8%AF%95/"/>
+    
+      <category term="capybara" scheme="http://blog.ligan.me/tags/capybara/"/>
+    
+      <category term="rspec" scheme="http://blog.ligan.me/tags/rspec/"/>
+    
       <category term="Ruby" scheme="http://blog.ligan.me/categories/Ruby/"/>
     
       <category term="测试" scheme="http://blog.ligan.me/categories/Ruby/%E6%B5%8B%E8%AF%95/"/>
@@ -210,7 +210,7 @@ feature <span class="string">"Login"</span> <span class="keyword">do</span>
     <link href="http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/"/>
     <id>http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/</id>
     <published>2013-09-04T17:42:00.000Z</published>
-    <updated>2014-03-22T16:46:31.000Z</updated>
+    <updated>2014-03-23T06:12:06.000Z</updated>
     <content type="html"><![CDATA[<h2 id="rvm一个重要的功能_gemset">rvm一个重要的功能 gemset</h2>
 <p>rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.<strong>gemset本身也有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv</strong></p>
 <p>而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.</p>
@@ -303,6 +303,12 @@ pry
 
 <p>我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看<a href="http://rvm.io/" target="_blank">文档</a><br>]]></summary>
     
+      <category term="rvm" scheme="http://blog.ligan.me/tags/rvm/"/>
+    
+      <category term="gem" scheme="http://blog.ligan.me/tags/gem/"/>
+    
+      <category term="ruby" scheme="http://blog.ligan.me/tags/ruby/"/>
+    
       <category term="Ruby" scheme="http://blog.ligan.me/categories/Ruby/"/>
     
       <category term="工具" scheme="http://blog.ligan.me/categories/Ruby/%E5%B7%A5%E5%85%B7/"/>
@@ -314,7 +320,7 @@ pry
     <link href="http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/"/>
     <id>http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/</id>
     <published>2013-01-06T14:01:00.000Z</published>
-    <updated>2014-03-22T16:31:26.000Z</updated>
+    <updated>2014-03-23T06:11:45.000Z</updated>
     <content type="html"><![CDATA[<p>以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。如</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 </pre></td><td class="code"><pre>pandoc <span class="built_in">list</span><span class="built_in">.</span>markdown <span class="attribute">-t</span> html <span class="attribute">-o</span> <span class="built_in">list</span><span class="built_in">.</span>markdown<span class="built_in">.</span>html
@@ -353,6 +359,8 @@ list.md  list.md.html
 ]]></content>
     
     
+      <category term="zsh" scheme="http://blog.ligan.me/tags/zsh/"/>
+    
       <category term="Linux" scheme="http://blog.ligan.me/categories/Linux/"/>
     
   </entry>
@@ -362,7 +370,7 @@ list.md  list.md.html
     <link href="http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/"/>
     <id>http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/</id>
     <published>2013-01-03T11:51:00.000Z</published>
-    <updated>2013-09-04T17:28:13.000Z</updated>
+    <updated>2014-03-23T06:11:10.000Z</updated>
     <content type="html"><![CDATA[<h2 id="2012_过去了">2012 过去了</h2>
 <p>世界末日没来，依然没有成为高富帅，被逼着裸婚了，学习没有长进，又浪费了一年</p>
 <p><br></p>
@@ -376,6 +384,8 @@ list.md  list.md.html
 ]]></content>
     
     
+      <category term="闲聊" scheme="http://blog.ligan.me/tags/%E9%97%B2%E8%81%8A/"/>
+    
       <category term="闲聊" scheme="http://blog.ligan.me/categories/%E9%97%B2%E8%81%8A/"/>
     
   </entry>
@@ -385,10 +395,12 @@ list.md  list.md.html
     <link href="http://blog.ligan.me/2012/10/01/first-blood/"/>
     <id>http://blog.ligan.me/2012/10/01/first-blood/</id>
     <published>2012-10-01T13:50:00.000Z</published>
-    <updated>2013-08-22T08:29:35.000Z</updated>
+    <updated>2014-03-23T06:10:36.000Z</updated>
     <content type="html"><![CDATA[<p>卖个萌,over</p>
 ]]></content>
     
+    
+      <category term="闲聊" scheme="http://blog.ligan.me/tags/%E9%97%B2%E8%81%8A/"/>
     
       <category term="闲聊" scheme="http://blog.ligan.me/categories/%E9%97%B2%E8%81%8A/"/>
     
