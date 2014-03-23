@@ -17,7 +17,7 @@
     <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/favicon.ico">
   
   <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -83,262 +83,93 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-rspec-feature-ce-shi-jian-jie" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2013/09/08/rspec-feature-ce-shi-jian-jie/" class="article-date">
-  <time datetime="2013-09-08T07:55:00.000Z" itemprop="datePublished">Sep 8 2013</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2013" class="archive-year">2013</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2013/09/08/rspec-feature-ce-shi-jian-jie/" class="archive-article-date">
+  <time datetime="2013-09-08T07:55:00.000Z" itemprop="datePublished">Sep 8</time>
 </a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/测试/">测试</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+      
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2013/09/08/rspec-feature-ce-shi-jian-jie/">rspec中使用feature spec进行用户/验收测试</a>
+      <a class="archive-article-title" href="/2013/09/08/rspec-feature-ce-shi-jian-jie/">rspec中使用feature spec进行用户/验收测试</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="feature_spec与request_spec的区别">feature spec与request spec的区别</h2>
-<p>rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.</p>
-<p>feature spec在测试中来说是比较高等级的测试.大概相当于集成测试或者更高级别的用户/验收测试.一般是模拟用户的实际操作和应用外部的请求来执行测试.简单来说就是模拟浏览器中的动作,期待应用正确的反应.</p>
-<p>为什么2.0之后的capybara要做出这样的改动呢?</p>
-<p>因为一般的来说capybara是模拟浏览器中的动作,这种测试是相当于模拟一个用户在用户界面中的操作,是基于usercase的.而以前的request spec则还是没有脱离应用层面(发送http请求,比较相应结果),比如在以前的capybara的dsl中,使用’get’来访问页面,而现在则改成了’visit’.后者’访问’这个动作,比’get’这个http请求更接近于用户的行为.</p>
-<p>所以使用feature spec相对来说更符合behavior的思想,也带来更好的阅读性.</p>
-<p>
-        
-          <p class="article-more-link">
-            <a href="/2013/09/08/rspec-feature-ce-shi-jian-jie/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/" data-id="z7o5hdy6cz29apy2" class="article-share-link">Share</a>
-      
-        <a href="http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
+    </header>
   </div>
-  
 </article>
-
-
   
-    <article id="post-using-rvm-manage-your-gems" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2013/09/05/using-rvm-manage-your-gems/" class="article-date">
-  <time datetime="2013-09-04T17:42:00.000Z" itemprop="datePublished">Sep 5 2013</time>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2013/09/05/using-rvm-manage-your-gems/" class="archive-article-date">
+  <time datetime="2013-09-04T17:42:00.000Z" itemprop="datePublished">Sep 5</time>
 </a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/工具/">工具</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+      
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2013/09/05/using-rvm-manage-your-gems/">使用rvm更好的管理你的gem</a>
+      <a class="archive-article-title" href="/2013/09/05/using-rvm-manage-your-gems/">使用rvm更好的管理你的gem</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="rvm一个重要的功能_gemset">rvm一个重要的功能 gemset</h2>
-<p>rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.<strong>gemset本身也有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv</strong></p>
-<p>而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.</p>
-<h2 id="gemset基本使用">gemset基本使用</h2>
-<p>先从gemset基本使用开始讲起<br><br>我们平时使用rvm不指定gemset时,默认使用的是当前ruby版本下的default gemset,如<code>2.0@default</code>.如果想创建自己的gemset则使用</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>╭─<span class="constant">Gavin</span><span class="variable">@ligan</span>  ~ ‹ruby-<span class="number">2.0</span>.<span class="number">0</span>›
-╰─<span class="variable">$ </span>rvm gemset create rails4
- <span class="constant">Gemset</span> <span class="string">'rails40'</span> created.
-</pre></td></tr></table></figure>
-
-<p>这样我们就拥有了一个gemset “rails40”,想要将该gemset设为默认gemset则使用</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>╭─Gavin<span class="property">@ligan</span>  ~ ‹ruby-<span class="number">2.0</span><span class="number">.0</span>›
-╰─$ rvm use <span class="number">2.0</span><span class="property">@rails4</span> --<span class="reserved">default</span>
- Using <span class="regexp">/Users/Gavin/</span>.rvm/gems/ruby-<span class="number">2.0</span><span class="number">.0</span>-p247 <span class="reserved">with</span> gemset rails4
-</pre></td></tr></table></figure>
-
-<p>以上命令可以简化为</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="comment">$</span> <span class="comment">rvm</span> <span class="comment">use</span> <span class="comment">2</span><span class="string">.</span><span class="comment">0@rails4</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">default</span>
-</pre></td></tr></table></figure>
-
-<p>我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看<a href="http://rvm.io/" target="_blank">文档</a><br>
-        
-          <p class="article-more-link">
-            <a href="/2013/09/05/using-rvm-manage-your-gems/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/" data-id="prm4pokgysvbn2ij" class="article-share-link">Share</a>
-      
-        <a href="http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
+    </header>
   </div>
-  
 </article>
-
-
   
-    <article id="post-zsh-alias-with-parameters" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2013/01/06/zsh-alias-with-parameters/" class="article-date">
-  <time datetime="2013-01-06T14:01:00.000Z" itemprop="datePublished">Jan 6 2013</time>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2013/01/06/zsh-alias-with-parameters/" class="archive-article-date">
+  <time datetime="2013-01-06T14:01:00.000Z" itemprop="datePublished">Jan 6</time>
 </a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux/">Linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+      
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2013/01/06/zsh-alias-with-parameters/">zsh alias with parameters</a>
+      <a class="archive-article-title" href="/2013/01/06/zsh-alias-with-parameters/">zsh alias with parameters</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。如</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>pandoc <span class="built_in">list</span><span class="built_in">.</span>markdown <span class="attribute">-t</span> html <span class="attribute">-o</span> <span class="built_in">list</span><span class="built_in">.</span>markdown<span class="built_in">.</span>html
-</pre></td></tr></table></figure>
-
-<p>想要省掉一堆-t html -o 什么的参数，最好是我只需要输入</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>pd 文件名
-</pre></td></tr></table></figure>
-
-<p>就可以完成转换，zsh在alias中加参数的方法稍微有些不一样，查看zsh文档的一堆废话后（csh中怎么写的，zsh和csh不一样，balabala），在.zshrc中加入</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="function"><span class="title">pd</span></span>() { pandoc <span class="string">"<span class="variable">$1</span>"</span> -t html -o <span class="string">"<span class="variable">$1</span>"</span>.html; }
-</pre></td></tr></table></figure>
-
-<p>之后试验一下</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="code"><pre>╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
-╰─<span class="variable">$ </span>ls
-list.md
-╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
-╰─<span class="variable">$ </span>pd list.md
-╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
-╰─<span class="variable">$ </span>ls
-list.md  list.md.html
-</pre></td></tr></table></figure>
-
-<p>大功告成</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/" data-id="g5cu3tbjb78fqw3e" class="article-share-link">Share</a>
-      
-        <a href="http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
+    </header>
   </div>
-  
 </article>
-
-
   
-    <article id="post-jiu-zhe-yao-dao-liao-2013nian-liao" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/" class="article-date">
-  <time datetime="2013-01-03T11:51:00.000Z" itemprop="datePublished">Jan 3 2013</time>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/" class="archive-article-date">
+  <time datetime="2013-01-03T11:51:00.000Z" itemprop="datePublished">Jan 3</time>
 </a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/闲聊/">闲聊</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+      
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/">就这么到了2013年了</a>
+      <a class="archive-article-title" href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/">就这么到了2013年了</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="2012_过去了">2012 过去了</h2>
-<p>世界末日没来，依然没有成为高富帅，被逼着裸婚了，学习没有长进，又浪费了一年</p>
-<p><br></p>
-<h2 id="2013_也立个目标吧">2013 也立个目标吧</h2>
-<ul>
-<li>找份喜欢的工作</li>
-<li>不和傻逼为伍</li>
-<li>远离monkey test</li>
-</ul>
-<p>对了，还有开始写blog</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/" data-id="rltuam8eyv57jsvg" class="article-share-link">Share</a>
-      
-        <a href="http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
+    </header>
   </div>
-  
 </article>
-
-
   
+  
+    </div></section>
   
 </section>
         
@@ -361,6 +192,8 @@ list.md  list.md.html
     </div>
   </div>
 
+  
+    
   
 </aside>
         
