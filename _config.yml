@@ -104,6 +104,8 @@ stylus:
 # Deployment
 ## Docs: http://zespia.tw/hexo/docs/deployment.html
 deploy:
-  type: github
-  repository: https://github.com/flypiggy/flypiggy.github.com.git
-  branch: master
+  type: git
+  master: github
+  repo:
+    github: git@github.com:flypiggy/flypiggy.github.com.git,master
+    gitcafe: git@gitcafe.com:gavin_li/gavin_li.git,gitcafe-pages
