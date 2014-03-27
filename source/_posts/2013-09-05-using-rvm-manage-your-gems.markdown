@@ -3,15 +3,16 @@ layout: post
 title: "使用rvm更好的管理你的gem"
 date: 2013-09-05 01:42
 comments: true
-categories: [Ruby, 工具]
+categories: Ruby
 tags: [rvm, gem, ruby]
+description: rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势.
 
 ---
 
 ##rvm一个重要的功能 gemset
-rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.**gemset本身也有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv**
+rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势.
 
-而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.
+**gemset本身有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv.**而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.
 
 
 ##gemset基本使用
@@ -36,7 +37,6 @@ rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接�
 $ rvm use 2.0@rails4 --create --default
 ```
 我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看[文档](http://rvm.io/)
-<!-- more -->
 
 ##项目中的gemset使用
 我们有了不同的gemset,目的就是为了区分不同项目中不同的环境.在不同的项目中我们可以通过rvmrc, gemfile, ruby-version等来使rvm自动切换到项目当前所需要的环境中.

@@ -3,12 +3,13 @@ layout: post
 title: "zsh alias with parameters"
 date: 2013-01-06 22:01
 comments: true
-categories: [Linux]
+categories: Linux
 tags: [zsh]
+description: 以前经常在shell中使用alias来偷懒减少输入,今天想在zsh中加入一个带参数的alias.
 
 ---
 
-以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。如
+以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。例如
 
 ```
 pandoc list.markdown -t html -o list.markdown.html

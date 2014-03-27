@@ -3,8 +3,9 @@ layout: post
 title: "rspec中使用feature spec进行用户/验收测试"
 date: 2013-09-08 15:55
 comments: true
-categories: [Ruby, 测试]
+categories: Ruby
 tags: [测试, capybara, rspec, ruby]
+description: rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.
 
 ---
 
@@ -19,7 +20,6 @@ feature spec在测试中来说是比较高等级的测试.大概相当于集成�
 
 所以使用feature spec相对来说更符合behavior的思想,也带来更好的阅读性.
 
-<!-- more -->
 ##rails中使用feature spec
 本文以rails为例,来介绍feature spec的使用.
 
@@ -87,13 +87,13 @@ feature spec的测试中,我们一般按照待测的功能点来划分用例,即
 require "spec_helper"
 
 feature 'Login' do
-  scenario 'User enter right account' do    
+  scenario 'User enter right account' do
     visit '/login'
     fill_in 'Name', :with => 'username'
     fill_in 'Password', :with => 'right'
     click_button 'login'
 
-    expect(page).to have_text('welcome back,username')      
+    expect(page).to have_text('welcome back,username')
   end
 
   scenario 'User enter wrong account' do
@@ -102,7 +102,7 @@ feature 'Login' do
     fill_in 'Password', with: 'wrong'
     click_button 'login'
 
-    expect(page).to have_text('Wrong password,pl"""ase try again!')
+    expect(page).to have_text('Wrong password,please try again!')
   end
 end
 ```
