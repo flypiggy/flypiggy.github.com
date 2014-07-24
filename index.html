@@ -48,8 +48,6 @@
 				
 					<li><a href="/archives">Archives</a></li>
 				
-					<li><a href="/about_me.html">About Me</a></li>
-				
 				<li>
 				
 				<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
@@ -74,8 +72,12 @@
     <h1 itemprop="name">使用oh-my-zsh内置插件省略bundle exec</h1>
     
      
-      <p itemprop="description" >在oh-my-zsh中省略输入烦人的  bundle exec.</p>
-      
+           <p itemprop="description" >bundle exec
+在使用bundler管理的项目中,为了统一使用环境,经常要使用bundle exec来执行项目中的各种命令.
+比如在某些项目中使用的是rake 0.9而系统中安装有rake 10时候如果不加上bundle exec就会提示错误.这时候就需要执行
+1
+bun</p>
+        
     
     <time datetime="2014-03-02T04:09:23.000Z" itemprop="datePublished">Mar 2 2014</time>
   </a>
@@ -88,7 +90,8 @@
     <h1 itemprop="name">rspec中使用feature spec进行用户/验收测试</h1>
     
      
-      <p itemprop="description" >rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.</p>
+       <p itemprop="description" >feature spec与request spec的区别
+rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/reques</p>
       
     
     <time datetime="2013-09-08T07:55:00.000Z" itemprop="datePublished">Sep 8 2013</time>
@@ -102,7 +105,9 @@
     <h1 itemprop="name">使用rvm更好的管理你的gem</h1>
     
      
-      <p itemprop="description" >rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势.</p>
+       <p itemprop="description" >rvm一个重要的功能 gemset
+rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.gemset本身也有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv
+而我认为gems</p>
       
     
     <time datetime="2013-09-04T17:42:00.000Z" itemprop="datePublished">Sep 5 2013</time>
@@ -116,8 +121,13 @@
     <h1 itemprop="name">zsh alias with parameters</h1>
     
      
-      <p itemprop="description" >以前经常在shell中使用alias来偷懒减少输入,今天想在zsh中加入一个带参数的alias.</p>
-      
+           <p itemprop="description" >以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。如
+1
+pandoc list.markdown -t html -o list.markdown.html
+
+
+想要省掉一堆-t html -o 什么的参数，最好</p>
+        
     
     <time datetime="2013-01-06T14:01:00.000Z" itemprop="datePublished">Jan 6 2013</time>
   </a>
@@ -130,8 +140,17 @@
     <h1 itemprop="name">就这么到了2013年了</h1>
     
      
-      <p itemprop="description" >2012 过去了,世界末日没来，依然没有成为高富帅，被逼着裸婚了，学习没有长进，又浪费了一年.</p>
-      
+           <p itemprop="description" >2012 过去了
+世界末日没来，依然没有成为高富帅，被逼着裸婚了，学习没有长进，又浪费了一年
+
+2013 也立个目标吧
+
+找份喜欢的工作
+不和傻逼为伍
+远离monkey test
+
+对了，还有开始写blog</p>
+        
     
     <time datetime="2013-01-03T11:51:00.000Z" itemprop="datePublished">Jan 3 2013</time>
   </a>
@@ -167,6 +186,10 @@
 			<li><a href="/categories/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 		
 			<li><a href="/categories/Ruby/" title="Ruby">Ruby<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Ruby/工具/" title="工具">工具<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Ruby/测试/" title="测试">测试<sup>1</sup></a></li>
 		
 			<li><a href="/categories/闲聊/" title="闲聊">闲聊<sup>2</sup></a></li>
 		

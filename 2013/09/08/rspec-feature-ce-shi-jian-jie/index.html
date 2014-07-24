@@ -9,15 +9,18 @@
     
     <meta name="author" content="Gavin">
     
-    <meta name="description" itemprop="description" content="rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.">
+    <meta name="description" content="feature spec与request spec的区别
+rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.
+feature spec在测试中来说是比较高等级的测试.大概相当于集成测试或者更高级别的用户/验收测试.一般是模拟用户的实际操作和应用外部的请求来执行测试.简单来说就是模拟浏览器中的动作,期待应用正确的反应.
+为什么2.0之后的capybara要做出这样的改动呢?
+因为一般的来说capybara是模拟浏览器中的动作,这种测试是相当于模拟一个用户在用户界面中的操作,是基于usercase的.而以前的request spec则还是没有脱离应用层面(发送http请求,比较相应结果),比如在以前的capybara的dsl中,使用’get’来访问页面,而现在则改成了’visit’.后者’访问’这个动作,比’get’这个http请求更接近于用户的行为.
+所以使用feature spec相对来说更符合behavior的思想,也带来更好的阅读性.">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="flypiggys" />
     <meta name="twitter:title" content="rspec中使用feature spec进行用户/验收测试 | Gavin&#39;s Blog" />
-      
-        <meta name="twitter:description" content="rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request." />
       
     
     
@@ -52,8 +55,6 @@
 				
 					<li><a href="/archives">Archives</a></li>
 				
-					<li><a href="/about_me.html">About Me</a></li>
-				
 				<li>
 				
 				<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
@@ -82,7 +83,7 @@
     </p>
   <p class="article-time">
     <time datetime="2013-09-08T07:55:00.000Z" itemprop="datePublished">Sep 8 2013</time>
-    Updated:<time datetime="2014-07-24T14:35:32.000Z" itemprop="dateModified">Jul 24 2014</time>
+    Updated:<time datetime="2014-07-24T14:45:40.000Z" itemprop="dateModified">Jul 24 2014</time>
     
   </p>
 </header>
@@ -100,6 +101,7 @@
 <p>为什么2.0之后的capybara要做出这样的改动呢?</p>
 <p>因为一般的来说capybara是模拟浏览器中的动作,这种测试是相当于模拟一个用户在用户界面中的操作,是基于usercase的.而以前的request spec则还是没有脱离应用层面(发送http请求,比较相应结果),比如在以前的capybara的dsl中,使用’get’来访问页面,而现在则改成了’visit’.后者’访问’这个动作,比’get’这个http请求更接近于用户的行为.</p>
 <p>所以使用feature spec相对来说更符合behavior的思想,也带来更好的阅读性.</p>
+<p><a id="more"></a></p>
 <h2 id="rails中使用feature_spec">rails中使用feature spec</h2>
 <p>本文以rails为例,来介绍feature spec的使用.</p>
 <p>首先安装rspec和capybara,在gemfile中加入</p>
@@ -202,13 +204,13 @@ group <span class="symbol">:test</span> <span class="keyword">do</span>
 </pre></td><td class="code"><pre><span class="keyword">require</span> <span class="string">"spec_helper"</span>
 
 feature <span class="string">'Login'</span> <span class="keyword">do</span>
-  scenario <span class="string">'User enter right account'</span> <span class="keyword">do</span>
+  scenario <span class="string">'User enter right account'</span> <span class="keyword">do</span>    
     visit <span class="string">'/login'</span>
     fill_in <span class="string">'Name'</span>, <span class="symbol">:with</span> =&gt; <span class="string">'username'</span>
     fill_in <span class="string">'Password'</span>, <span class="symbol">:with</span> =&gt; <span class="string">'right'</span>
     click_button <span class="string">'login'</span>
 
-    expect(page).to have_text(<span class="string">'welcome back,username'</span>)
+    expect(page).to have_text(<span class="string">'welcome back,username'</span>)      
   <span class="keyword">end</span>
 
   scenario <span class="string">'User enter wrong account'</span> <span class="keyword">do</span>
@@ -217,7 +219,7 @@ feature <span class="string">'Login'</span> <span class="keyword">do</span>
     fill_in <span class="string">'Password'</span>, <span class="symbol">with:</span> <span class="string">'wrong'</span>
     click_button <span class="string">'login'</span>
 
-    expect(page).to have_text(<span class="string">'Wrong password,please try again!'</span>)
+    expect(page).to have_text(<span class="string">'Wrong password,pl"""ase try again!'</span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </pre></td></tr></table></figure>
@@ -235,7 +237,7 @@ feature <span class="string">'Login'</span> <span class="keyword">do</span>
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Ruby/">Ruby</a>
+  <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/测试/">测试</a>
 </div>
 
 
@@ -290,6 +292,10 @@ feature <span class="string">'Login'</span> <span class="keyword">do</span>
 			<li><a href="/categories/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 		
 			<li><a href="/categories/Ruby/" title="Ruby">Ruby<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Ruby/工具/" title="工具">工具<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Ruby/测试/" title="测试">测试<sup>1</sup></a></li>
 		
 			<li><a href="/categories/闲聊/" title="闲聊">闲聊<sup>2</sup></a></li>
 		
