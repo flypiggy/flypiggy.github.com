@@ -3,13 +3,14 @@ layout: post
 title: '使用oh-my-zsh内置插件省略bundle exec'
 date: 2014-03-02 12:09:23 +0800
 comments: true
-categories: [Ruby, 工具]
+categories: Ruby
 tags: [ruby, bundler]
-
+description: 在oh-my-zsh中省略输入烦人的  bundle exec.
 ---
 ##bundle exec
 
 在使用bundler管理的项目中,为了统一使用环境,经常要使用`bundle exec`来执行项目中的各种命令.
+
 
 比如在某些项目中使用的是rake 0.9而系统中安装有rake 10时候如果不加上`bundle exec`就会提示错误.这时候就需要执行
 
