@@ -9,34 +9,7 @@
     
     <meta name="author" content="Gavin">
     
-    <meta name="description" content="rvm一个重要的功能 gemset
-rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.gemset本身也有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv
-而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.
-gemset基本使用
-先从gemset基本使用开始讲起我们平时使用rvm不指定gemset时,默认使用的是当前ruby版本下的default gemset,如2.0@default.如果想创建自己的gemset则使用
-1
-2
-3
-╭─Gavin@ligan  ~ ‹ruby-2.0.0›
-╰─$ rvm gemset create rails4
- Gemset &#39;rails40&#39; created.
-
-
-这样我们就拥有了一个gemset “rails40”,想要将该gemset设为默认gemset则使用
-1
-2
-3
-╭─Gavin@ligan  ~ ‹ruby-2.0.0›
-╰─$ rvm use 2.0@rails4 --default
- Using /Users/Gavin/.rvm/gems/ruby-2.0.0-p247 with gemset rails4
-
-
-以上命令可以简化为
-1
-$ rvm use 2.0@rails4 --create --default
-
-
-我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看文档">
+    <meta name="description" itemprop="description" content="rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势.">
     
     
     
@@ -44,9 +17,11 @@ $ rvm use 2.0@rails4 --create --default
     <meta name="twitter:site" content="flypiggys" />
     <meta name="twitter:title" content="使用rvm更好的管理你的gem | Gavin&#39;s Blog" />
       
+        <meta name="twitter:description" content="rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势." />
+      
     
     
-    <link rel="alternative" href="/atom" title="Gavin&#39;s Blog" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -77,6 +52,8 @@ $ rvm use 2.0@rails4 --create --default
 				
 					<li><a href="/archives">Archives</a></li>
 				
+					<li><a href="/about_me.html">About Me</a></li>
+				
 				<li>
 				
 				<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
@@ -105,7 +82,7 @@ $ rvm use 2.0@rails4 --create --default
     </p>
   <p class="article-time">
     <time datetime="2013-09-04T17:42:00.000Z" itemprop="datePublished">Sep 5 2013</time>
-    Updated:<time datetime="2014-03-23T06:12:06.000Z" itemprop="dateModified">Mar 23 2014</time>
+    Updated:<time datetime="2014-07-24T14:35:32.000Z" itemprop="dateModified">Jul 24 2014</time>
     
   </p>
 </header>
@@ -118,8 +95,8 @@ $ rvm use 2.0@rails4 --create --default
 		</div>
 		
 		<h2 id="rvm一个重要的功能_gemset">rvm一个重要的功能 gemset</h2>
-<p>rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.<strong>gemset本身也有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv</strong></p>
-<p>而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.</p>
+<p>rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势.</p>
+<p><strong>gemset本身有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv.</strong>而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.</p>
 <h2 id="gemset基本使用">gemset基本使用</h2>
 <p>先从gemset基本使用开始讲起<br><br>我们平时使用rvm不指定gemset时,默认使用的是当前ruby版本下的default gemset,如<code>2.0@default</code>.如果想创建自己的gemset则使用</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
@@ -144,7 +121,7 @@ $ rvm use 2.0@rails4 --create --default
 </pre></td><td class="code"><pre><span class="comment">$</span> <span class="comment">rvm</span> <span class="comment">use</span> <span class="comment">2</span><span class="string">.</span><span class="comment">0@rails4</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">default</span>
 </pre></td></tr></table></figure>
 
-<p>我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看<a href="http://rvm.io/" target="_blank">文档</a><br><a id="more"></a></p>
+<p>我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看<a href="http://rvm.io/" target="_blank">文档</a></p>
 <h2 id="项目中的gemset使用">项目中的gemset使用</h2>
 <p>我们有了不同的gemset,目的就是为了区分不同项目中不同的环境.在不同的项目中我们可以通过rvmrc, gemfile, ruby-version等来使rvm自动切换到项目当前所需要的环境中.</p>
 <p>rvm 1.11之前只支持在项目中添加.rvmrc的方式来切换rvm环境,而在1.22之后则建议使用</p>
@@ -191,7 +168,7 @@ pry
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Ruby/">Ruby</a>►<a class="article-category-link" href="/categories/Ruby/工具/">工具</a>
+  <a class="article-category-link" href="/categories/Ruby/">Ruby</a>
 </div>
 
 
@@ -247,10 +224,6 @@ pry
 		
 			<li><a href="/categories/Ruby/" title="Ruby">Ruby<sup>3</sup></a></li>
 		
-			<li><a href="/categories/Ruby/工具/" title="工具">工具<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Ruby/测试/" title="测试">测试<sup>1</sup></a></li>
-		
 			<li><a href="/categories/闲聊/" title="闲聊">闲聊<sup>2</sup></a></li>
 		
 		</ul>
@@ -285,7 +258,7 @@ pry
 
 
   <div class="rsspart">
-	<a href="/atom" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
