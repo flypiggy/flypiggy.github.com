@@ -21,7 +21,7 @@
       
     
     
-    <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -31,40 +31,40 @@
     <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
     
     <link rel="stylesheet" href="/css/style.css" type="text/css">
+
 </head>
 
   <body>
     <header id="banner">
       <div>
 
-	
-		<div id="textlogo">
-			<h1 class="site-name"><a href="/" title="Gavin&#39;s Blog">Gavin&#39;s Blog</a></h1>
-			<h2 class="blog-motto">Programming (cdr (life))</h2>
-		</div>
-		<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-		</a></div>
-		<nav class="animated">
-			<ul>
-				<ul>
-				 
-					<li><a href="/">Home</a></li>
-				
-					<li><a href="/archives">Archives</a></li>
-				
-					<li><a href="/about_me.html">About Me</a></li>
-				
-				<li>
-				
-				<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-					<label>Search</label>
-					<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-					<input type="hidden" name="q" value="site:blog.ligan.me">
-				</form>
-				
-				</li>
-			</ul>
-		</nav>			
+  
+    <div id="textlogo">
+      <h1 class="site-name"><a href="/" title="Gavin&#39;s Blog">Gavin&#39;s Blog</a></h1>
+      <h2 class="blog-motto">Programming (cdr (life))</h2>
+    </div>
+    <div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+    </a></div>
+    <nav class="animated">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a href="/about_me.html">About Me</a></li>
+        
+        <li>
+        
+        <form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+          <label>Search</label>
+          <input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+          <input type="hidden" name="q" value="site:blog.ligan.me">
+        </form>
+        
+        </li>
+      </ul>
+    </nav>
 </div>
 
     </header>
@@ -82,7 +82,7 @@
     </p>
   <p class="article-time">
     <time datetime="2013-01-06T14:01:00.000Z" itemprop="datePublished">Jan 6 2013</time>
-    Updated:<time datetime="2014-07-24T14:48:41.000Z" itemprop="dateModified">Jul 24 2014</time>
+    Updated:<time datetime="2014-12-07T15:39:15.000Z" itemprop="dateModified">Dec 7 2014</time>
     
   </p>
 </header>
@@ -95,38 +95,16 @@
 		</div>
 		
 		<p>以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。例如</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>pandoc <span class="built_in">list</span><span class="built_in">.</span>markdown <span class="attribute">-t</span> html <span class="attribute">-o</span> <span class="built_in">list</span><span class="built_in">.</span>markdown<span class="built_in">.</span>html
-</pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pandoc <span class="keyword">list</span>.markdown -<span class="keyword">t</span> html -<span class="keyword">o</span> <span class="keyword">list</span>.markdown.html</div></pre></td></tr></table></figure>
 
 <p>想要省掉一堆-t html -o 什么的参数，最好是我只需要输入</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>pd 文件名
-</pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">pd</span> 文件名</div></pre></td></tr></table></figure>
 
 <p>就可以完成转换，zsh在alias中加参数的方法稍微有些不一样，查看zsh文档的一堆废话后（csh中怎么写的，zsh和csh不一样，balabala），在.zshrc中加入</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="function"><span class="title">pd</span></span>() { pandoc <span class="string">"<span class="variable">$1</span>"</span> -t html -o <span class="string">"<span class="variable">$1</span>"</span>.html; }
-</pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">pd</span></span>() { pandoc <span class="string">"<span class="variable">$1</span>"</span> -t html -o <span class="string">"<span class="variable">$1</span>"</span>.html; }</div></pre></td></tr></table></figure>
 
 <p>之后试验一下</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="code"><pre>╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
-╰─<span class="variable">$ </span>ls
-list.md
-╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
-╰─<span class="variable">$ </span>pd list.md
-╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›
-╰─<span class="variable">$ </span>ls
-list.md  list.md.html
-</pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">╭─gavin@Gavin-PC  ~/ligan/Training/demo ‹<span class="keyword">ruby</span>-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─$ <span class="keyword">ls</span></div><div class="line"><span class="keyword">list</span>.md</div><div class="line">╭─gavin@Gavin-PC  ~/ligan/Training/demo ‹<span class="keyword">ruby</span>-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─$ pd <span class="keyword">list</span>.md</div><div class="line">╭─gavin@Gavin-PC  ~/ligan/Training/demo ‹<span class="keyword">ruby</span>-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─$ <span class="keyword">ls</span></div><div class="line"><span class="keyword">list</span>.md  <span class="keyword">list</span>.md.html</div></pre></td></tr></table></figure>
 
 <p>大功告成</p>
   
@@ -238,37 +216,37 @@ list.md  list.md.html
 </div>
     </div>
     <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hi, I&#39;m Gavin. I&#39;m a newbie programmer living in Beijing.  <br/>
-			Ruby and Lisp are my favorite languages . </p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/flypiggy" target="_blank" title="weibo"></a>
-		
-		
-		<a href="https://twitter.com/flypiggys" target="_blank" title="twitter"></a>
-		
-		
-		<a href="https://github.com/flypiggy" target="_blank" title="github"></a>
-		
-		
-		<a href="https://www.facebook.com/flypiggys" target="_blank" title="facebook"></a>
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
-		
-		<a href="http://blog.ligan.me" target="_blank" title="Gavin">Gavin</a>
-		
-		</p>
+  
+  <div class="line">
+    <span></span>
+    <div class="author"></div>
+  </div>
+  
+  
+  <section class="info">
+    <p> Hi, I&#39;m Gavin. I&#39;m a newbie programmer living in Beijing.  <br/>
+      Ruby and Lisp are my favorite languages . </p>
+  </section>
+   
+  <div class="social-font clearfix">
+    
+    <a href="http://weibo.com/flypiggy" target="_blank" title="weibo"></a>
+    
+    
+    <a href="https://twitter.com/flypiggys" target="_blank" title="twitter"></a>
+    
+    
+    <a href="https://github.com/flypiggy" target="_blank" title="github"></a>
+    
+    
+    <a href="https://www.facebook.com/flypiggys" target="_blank" title="facebook"></a>
+    
+  </div>
+    <p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014
+    
+    <a href="http://blog.ligan.me" target="_blank" title="Gavin">Gavin</a>
+    
+    </p>
 </div>
 </footer>
     <script src="/js/jquery-2.1.0.min.js"></script>

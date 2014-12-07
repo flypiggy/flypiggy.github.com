@@ -21,7 +21,7 @@
       
     
     
-    <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -31,40 +31,40 @@
     <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
     
     <link rel="stylesheet" href="/css/style.css" type="text/css">
+
 </head>
 
   <body>
     <header id="banner">
       <div>
 
-	
-		<div id="textlogo">
-			<h1 class="site-name"><a href="/" title="Gavin&#39;s Blog">Gavin&#39;s Blog</a></h1>
-			<h2 class="blog-motto">Programming (cdr (life))</h2>
-		</div>
-		<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-		</a></div>
-		<nav class="animated">
-			<ul>
-				<ul>
-				 
-					<li><a href="/">Home</a></li>
-				
-					<li><a href="/archives">Archives</a></li>
-				
-					<li><a href="/about_me.html">About Me</a></li>
-				
-				<li>
-				
-				<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-					<label>Search</label>
-					<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-					<input type="hidden" name="q" value="site:blog.ligan.me">
-				</form>
-				
-				</li>
-			</ul>
-		</nav>			
+  
+    <div id="textlogo">
+      <h1 class="site-name"><a href="/" title="Gavin&#39;s Blog">Gavin&#39;s Blog</a></h1>
+      <h2 class="blog-motto">Programming (cdr (life))</h2>
+    </div>
+    <div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+    </a></div>
+    <nav class="animated">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a href="/about_me.html">About Me</a></li>
+        
+        <li>
+        
+        <form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+          <label>Search</label>
+          <input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+          <input type="hidden" name="q" value="site:blog.ligan.me">
+        </form>
+        
+        </li>
+      </ul>
+    </nav>
 </div>
 
     </header>
@@ -82,7 +82,7 @@
     </p>
   <p class="article-time">
     <time datetime="2013-09-08T07:55:00.000Z" itemprop="datePublished">Sep 8 2013</time>
-    Updated:<time datetime="2014-07-24T14:48:41.000Z" itemprop="dateModified">Jul 24 2014</time>
+    Updated:<time datetime="2014-12-07T15:39:15.000Z" itemprop="dateModified">Dec 7 2014</time>
     
   </p>
 </header>
@@ -103,31 +103,13 @@
 <h2 id="rails中使用feature_spec">rails中使用feature spec</h2>
 <p>本文以rails为例,来介绍feature spec的使用.</p>
 <p>首先安装rspec和capybara,在gemfile中加入</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="code"><pre>group <span class="symbol">:development</span>, <span class="symbol">:test</span> <span class="keyword">do</span>
-  gem <span class="string">'rspec-rails'</span>
-<span class="keyword">end</span>
-
-group <span class="symbol">:test</span> <span class="keyword">do</span>
-  gem <span class="string">'capybara'</span>
-<span class="keyword">end</span>
-</pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">group <span class="symbol">:development</span>, <span class="symbol">:test</span> <span class="keyword">do</span></div><div class="line">  gem <span class="string">'rspec-rails'</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">group <span class="symbol">:test</span> <span class="keyword">do</span></div><div class="line">  gem <span class="string">'capybara'</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 
 <p>之后执行</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>bundle <span class="keyword">install</span>
-</pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bundle <span class="operator"><span class="keyword">install</span></span></div></pre></td></tr></table></figure>
 
 <p>再之后执行</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="tag">rails</span> <span class="tag">generate</span> <span class="tag">rspec</span><span class="pseudo">:install</span>
-</pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">rails</span> <span class="tag">generate</span> <span class="tag">rspec</span><span class="pseudo">:install</span></div></pre></td></tr></table></figure>
 
 <p>rspec和capybara就安装完毕了.</p>
 <p>rails中的generator默认生成的集成测试会在request/xxxx_spec.rb.默认是不支持capybara的,我们如果要在其中使用capybara还要在spec_helper中的configure中加入<code>config.include Capybara::DSL</code></p>
@@ -136,23 +118,7 @@ group <span class="symbol">:test</span> <span class="keyword">do</span>
 <h2 id="feature_spec写法">feature spec写法</h2>
 <p>在feature spec中,我们使用<code>feature-scenario</code> 来替代之前rspec的<code>describe - it</code>模式<br>注意两者千万不要混写成<code>feature-it</code>或者<code>describe-scenario</code>这种不伦不类的风格..</p>
 <p>另外与describe不同,feature下面是不允许再套feature的.</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="code"><pre>describe <span class="string">'Static pages'</span> <span class="keyword">do</span>
-  describe <span class="string">'Home page'</span> <span class="keyword">do</span>
-    it <span class="string">"should have the content 'Sample App'"</span> <span class="keyword">do</span>
-      visit <span class="string">'/static_pages/home'</span>
-      expect(page).to have_content(<span class="string">'Sample App'</span>)
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">describe <span class="string">'Static pages'</span> <span class="keyword">do</span></div><div class="line">  describe <span class="string">'Home page'</span> <span class="keyword">do</span></div><div class="line">    it <span class="string">"should have the content 'Sample App'"</span> <span class="keyword">do</span></div><div class="line">      visit <span class="string">'/static_pages/home'</span></div><div class="line">      expect(page).to have_content(<span class="string">'Sample App'</span>)</div><div class="line">    <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 
 <p>这样是可以的,但是把describe换成feature则会报错.</p>
 <p>feature spec的测试中,我们一般按照待测的功能点来划分用例,即每一个feature.而每一个scenario对应一条user case.这一点和测试人员写测试用例的方法很相似.比如下面的2条测试用例</p>
@@ -178,49 +144,7 @@ group <span class="symbol">:test</span> <span class="keyword">do</span>
 </tbody>
 </table>
 <p>使用feature spec的方式写出的测试代码如下.</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-</pre></td><td class="code"><pre><span class="keyword">require</span> <span class="string">"spec_helper"</span>
-
-feature <span class="string">'Login'</span> <span class="keyword">do</span>
-  scenario <span class="string">'User enter right account'</span> <span class="keyword">do</span>
-    visit <span class="string">'/login'</span>
-    fill_in <span class="string">'Name'</span>, <span class="symbol">:with</span> =&gt; <span class="string">'username'</span>
-    fill_in <span class="string">'Password'</span>, <span class="symbol">:with</span> =&gt; <span class="string">'right'</span>
-    click_button <span class="string">'login'</span>
-
-    expect(page).to have_text(<span class="string">'welcome back,username'</span>)
-  <span class="keyword">end</span>
-
-  scenario <span class="string">'User enter wrong account'</span> <span class="keyword">do</span>
-    visit <span class="string">'/login'</span>
-    fill_in <span class="string">'Name'</span>, <span class="symbol">with:</span> <span class="string">'username'</span>
-    fill_in <span class="string">'Password'</span>, <span class="symbol">with:</span> <span class="string">'wrong'</span>
-    click_button <span class="string">'login'</span>
-
-    expect(page).to have_text(<span class="string">'Wrong password,please try again!'</span>)
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">"spec_helper"</span></div><div class="line"></div><div class="line">feature <span class="string">'Login'</span> <span class="keyword">do</span></div><div class="line">  scenario <span class="string">'User enter right account'</span> <span class="keyword">do</span></div><div class="line">    visit <span class="string">'/login'</span></div><div class="line">    fill_in <span class="string">'Name'</span>, <span class="symbol">:with</span> =&gt; <span class="string">'username'</span></div><div class="line">    fill_in <span class="string">'Password'</span>, <span class="symbol">:with</span> =&gt; <span class="string">'right'</span></div><div class="line">    click_button <span class="string">'login'</span></div><div class="line"></div><div class="line">    expect(page).to have_text(<span class="string">'welcome back,username'</span>)</div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  scenario <span class="string">'User enter wrong account'</span> <span class="keyword">do</span></div><div class="line">    visit <span class="string">'/login'</span></div><div class="line">    fill_in <span class="string">'Name'</span>, <span class="symbol">with:</span> <span class="string">'username'</span></div><div class="line">    fill_in <span class="string">'Password'</span>, <span class="symbol">with:</span> <span class="string">'wrong'</span></div><div class="line">    click_button <span class="string">'login'</span></div><div class="line"></div><div class="line">    expect(page).to have_text(<span class="string">'Wrong password,please try again!'</span>)</div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 
 <p>feature spec的简单介绍就写到这里,希望大家喜欢这种方式.</p>
   
@@ -332,37 +256,37 @@ feature <span class="string">'Login'</span> <span class="keyword">do</span>
 </div>
     </div>
     <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hi, I&#39;m Gavin. I&#39;m a newbie programmer living in Beijing.  <br/>
-			Ruby and Lisp are my favorite languages . </p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/flypiggy" target="_blank" title="weibo"></a>
-		
-		
-		<a href="https://twitter.com/flypiggys" target="_blank" title="twitter"></a>
-		
-		
-		<a href="https://github.com/flypiggy" target="_blank" title="github"></a>
-		
-		
-		<a href="https://www.facebook.com/flypiggys" target="_blank" title="facebook"></a>
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
-		
-		<a href="http://blog.ligan.me" target="_blank" title="Gavin">Gavin</a>
-		
-		</p>
+  
+  <div class="line">
+    <span></span>
+    <div class="author"></div>
+  </div>
+  
+  
+  <section class="info">
+    <p> Hi, I&#39;m Gavin. I&#39;m a newbie programmer living in Beijing.  <br/>
+      Ruby and Lisp are my favorite languages . </p>
+  </section>
+   
+  <div class="social-font clearfix">
+    
+    <a href="http://weibo.com/flypiggy" target="_blank" title="weibo"></a>
+    
+    
+    <a href="https://twitter.com/flypiggys" target="_blank" title="twitter"></a>
+    
+    
+    <a href="https://github.com/flypiggy" target="_blank" title="github"></a>
+    
+    
+    <a href="https://www.facebook.com/flypiggys" target="_blank" title="facebook"></a>
+    
+  </div>
+    <p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014
+    
+    <a href="http://blog.ligan.me" target="_blank" title="Gavin">Gavin</a>
+    
+    </p>
 </div>
 </footer>
     <script src="/js/jquery-2.1.0.min.js"></script>
