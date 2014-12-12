@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Programming (cdr (life))]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.ligan.me/"/>
-  <updated>2014-12-07T16:14:49.364Z</updated>
+  <updated>2014-12-12T00:51:23.670Z</updated>
   <id>http://blog.ligan.me/</id>
   
   <author>
@@ -15,11 +15,71 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[CSRF and protect_from_forgery in Rails 4]]></title>
+    <link href="http://blog.ligan.me/2014/12/08/CSRF-and-protect-from-forgery-in-rails-4/"/>
+    <id>http://blog.ligan.me/2014/12/08/CSRF-and-protect-from-forgery-in-rails-4/</id>
+    <published>2014-12-07T16:20:31.000Z</published>
+    <updated>2014-12-12T00:50:59.000Z</updated>
+    <content type="html"><![CDATA[<p>最近的一个项目<a href="http://innoawards.geekpark.net/" target="_blank" rel="external">2014中国互联网创新评选</a>频繁出现恼人的 InvalidAuthenticityToken 错误, 引发了我对 Rails 中 protect_from_forgery 的思考, 本文介绍 CSRF 攻击以及在 Rails 中的保护方式, 什么情况下应该使用那种策略来防CSRF.</p>
+<h2 id="CSRF">CSRF</h2>
+<p>CSRF（Cross-site request forgery) 跨站请求伪造, 是一种比较常见的入侵方式. 顾名思义, 就是伪造成某个受信任的用户去向网站发送请求, 来达到某些目的. 比如伪造成你向网站提交一个修改密码的表单, 将你的密码改为攻击者设定的某个密码, 这样在不知不觉中你的密码就被修改了, 而假设攻击者同时也知道你的用户名, 这样攻击者盗取了你的帐号. </p>
+<p>CSRF 一般是怎么发生的呢? </p>
+<p>一般我们登录网站后, 都会和网站建立起一个一对一的 session 或 cookie 联系. 你接下来所发出的请求, 会带有你特有的一个身份信息, 服务器会识别出哪个用户执行的操作, 这样接下来你进行其它的操作时, 比如发帖, 转账等就不需要再次进行登录. 而 CSRF 所做的, 就是<strong>通过你的浏览器</strong>, 利用你和服务器间这特有的识别信息, 来通过你向服务器发出某个请求. 这样服务器认为这个操作是由你发出的, 从而”遵循你的意志”, 执行接到的命令.</p>
+<p>比如在 A 网站有一个表单, 你已经登录了 A 网站, 我在我的 B 网站写了一段 js 代码, 内容就是按照 A 网站的表单的格式向 A 网站提交一份表单, 表单的 value 是我自己定义的. 然后我只需要引导你访问 B 网站, 在你访问 B 网站期间, 这段 js 代码被你的浏览器所执行, 然后向 A 网站提交了表单, 这样我就成功利用了你的身份你的浏览器向 A 网站发出了请求. 而由于请求是由你的浏览器发出,可以利用你本地的 cookie 和 session 信息, 使其看起来就好像你发出的, 所以 A 网站的服务器也认为这个请求是来自你的合法请求. 这样不知不觉间, 你就执行了一个并非你本意的操作. 而一次 CSRF 攻击就成功了.</p>
+<p>这种攻击原理简单, 实现也不难, 但是绝大多数 web 框架都已经对这种攻击有所防范, 但遗憾的是互联网上依然有很多网站对这种攻击毫无防范.</p>
+<h2 id="Rails_中对_CSRF_的防范">Rails 中对 CSRF 的防范</h2>
+<p>Rails 中会在 html 页面生成时给每个表单添加一个隐藏的 authenticate_token 属性, 这个 token 在你每次登录网站时生成, 过期时间于 session 相同. 在你每次提交一个表单时都要带着这个 token, 并在 controller 中, 首先通过 <code>protect_from_forgery</code> 这个方法对 token 进行验证, 如果 token 验证失败的话, 你所执行的 post 操作就会失败. </p>
+<p>这样攻击者因为无法拿到你的 token, 所以就无法伪造整个表单. 前面所说的攻击方式中所提交的表单因为 token 错误, 而无法继续执行, 这样就达到了防范 CSRF 攻击的目的. 我们一般在 rails 的 layout 中会看到这样的代码.</p>
+<figure class="highlight slim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">doctype html</div><div class="line">html lang=session[:locale]</div><div class="line">  head</div><div class="line">    title</div><div class="line">      = (content_for?(:title) ? <span class="string">"#{yield(:title)} | "</span> : <span class="string">''</span>) + t(:sitename)</div><div class="line">	<span class="keyword">...</span></div><div class="line">    = csrf_meta_tags</div><div class="line">    <span class="keyword">...</span></div><div class="line">  body class=(controller_name + <span class="string">' '</span> + controller_name + <span class="string">'_'</span> + action_name)</div><div class="line">    = render <span class="string">'share/header'</span></div><div class="line">    = yield</div><div class="line">    = render <span class="string">'share/footer'</span></div><div class="line">    = javascript_include_tag <span class="string">'application'</span></div></pre></td></tr></table></figure>
+
+<p>其中<code>csrf_meta_tags</code>所做的就是生成这个 token</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">content</span>=<span class="value">"authenticity_token"</span> <span class="attribute">name</span>=<span class="value">"csrf-param"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">content</span>=<span class="value">"c2tB7nB1S0s7nQD2++sjv3pT/bKtb+4GIrEfcnn/tWw="</span> <span class="attribute">name</span>=<span class="value">"csrf-token"</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>rails 会默认在表单中使用这个 token参数和 form 一起传过来.</p>
+<h2 id="protect_from_forgery"><code>protect_from_forgery</code></h2>
+<p>token 传过来之后, rails 的 controller 会对这个 token 的合法性进行验证</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ApplicationController</span> <span class="inheritance">&lt; <span class="parent">ActionController::Base</span></span></span></div><div class="line">  <span class="comment"># Prevent CSRF attacks by raising an exception.</span></div><div class="line">  <span class="comment"># For APIs, you may want to use :null_session instead.</span></div><div class="line">  protect_from_forgery</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+
+<p>在 controller 中, <code>protect_from_forgery</code> 所做的就是验证这个 token 是否正确, 可以在后面加入<code>:with</code>参数指定处理方式, 如<code>protect_from_forgery with: :null_session</code>, rails 提供了三种处理方式</p>
+<h3 id=":exception"><code>:exception</code></h3>
+<p>这个是 rails4 的默认处理方式, 在 token 验证失败时抛出一个 InvalidAuthenticityToken 异常, 如果没有捕获的话进程终止, 客户端会收到服务器返回的 500错误. 这样所提交的伪造请求就无法继续执行到具体业务步骤, 达到了防范的目的.</p>
+<h3 id=":null_session"><code>:null_session</code></h3>
+<p>这曾是 rails3 的默认处理方式, token 验证失败时并不抛出异常, 而是使用一个空的 session 来执行下面的业务处理. 因为我们一般会把大部分的用户识别信息都保存在 session 中, 而在业务执行时也会在 session 中查找相关的用户信息. 所以当使用一个空 session 来提交表单时候, 应用因为从 session 中无法找到用户的相关信息, 从而无法伪造成该用户来进行操作.</p>
+<h3 id=":reset_session"><code>:reset_session</code></h3>
+<p>完全的重置这个 session. 这个不怎么用到, 虽然也可以达到防范的目的, 但是用户的 session 会被完全清空, 会需要重新进行登录, 一般使用 :null_session 就够了.</p>
+<h3 id="另外还有一个skip_before_action_:verify_authenticity_token">另外还有一个<code>skip_before_action :verify_authenticity_token</code></h3>
+<p>以上的3种策略之外, 还有一种情况, 就是完全跳过对 csrf_token 的验证. 也就是放弃对 csrf 的保护. 在你完全知道自己在做什么的情况下, 慎用!</p>
+<h2 id="什么情况下应该选用那种策略来应对">什么情况下应该选用那种策略来应对</h2>
+<p>知道了有以上的几种策略, 就需要考虑什么时候适合用什么策略来应对. 其实这才是写本文的初衷, 前面废话比较多, 其实对 rails 和 csrf 有所了解的人直接跳到这里看就够了, 2333…</p>
+<h3 id="with:_:exception"><code>with: :exception</code></h3>
+<p>如开始所说的, 在这个项目中 (<a href="http://innoawards.geekpark.net/vote" target="_blank" rel="external">2014中国互联网创新评选</a>), 一开始被<code>InvalidAuthenticityToken</code> 频繁骚扰让我很痛苦, 差点想把 csrf 改成 <code>:null_session</code> 方式. 但是在这个项目的评选中, 观众是完全匿名的, 我们只针对投票的 IP 地址的投票频率进行了限制, 如果使用<code>:null_session</code>的方式, 即使空的 session 也依然是可以投票的. 这样 csrf 的防范作用就没有了. </p>
+<p>厂商在拉票时一般都会推送一篇文章给粉丝们号召他们去投票, 如果没有做验证的话, 厂商只需要在推送的文章甚至在自己的主页中加入一段提交这个投票表单的 js 代码既可在浏览这个网页的用户不知情的情况下进行投票. 因为票会从用户的浏览器投出, 也就做到了 ‘分布式投票’ 那么针对 IP 地址的限制就几乎没有什么作用了. 也就无法杜绝刷票现象.</p>
+<p>所以最终这个项目我没有更改 csrf 的防护方式, 而是在代码中对<code>InvalidAuthenticityToken</code> 进行了处理</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">rescue_from <span class="constant">ActionController::InvalidAuthenticityToken</span> <span class="keyword">do</span> |exception|</div><div class="line">  render_422(exception)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+
+<h3 id="with:_:null_session"><code>with: :null_session</code></h3>
+<p>在做上一个项目的同时, 手中还有另一个项目(<a href="http://gif.geekpark.net/cn" target="_blank" rel="external">2015极客公园创新大会</a>)<br>在这个项目中, 只有一个下订单购票的表单, 用户同样是不需要登录就能提交的. 正常的用户一般不会直接进行购票, 而是浏览页面, 查看大会的特色, 嘉宾等等.  当他们觉得足够有吸引力, 终于下定决心要购票的时候, 页面生成的 session 以及 token 可能已经过期了. 这个使用如果依然使用<code>exception</code>的方式进行处理就会提示错误, 需要用户重新刷新页面后再次提交订单. 对用户下订单的流畅度造成了影响, 体验下降. 而且以买票来说, 未付款的订单是无效的, 不像投票一样会影响计票准确性.</p>
+<p>所以最终在这个项目中我使用了<code>:null_session</code>的方式.</p>
+<p>另外, 在 rails 中的一些 api 接口, 由于验证是通过其它方式进行的, rails 推荐的也是使用<code>:null_session</code>这种方式.</p>
+<h3 id=":reset_session-1"><code>:reset_session</code></h3>
+<p>这个用的比较少, 使用情况参照<code>:null_session</code></p>
+]]></content>
+    
+    
+      <category term="rails" scheme="http://blog.ligan.me/tags/rails/"/>
+    
+      <category term="ruby" scheme="http://blog.ligan.me/tags/ruby/"/>
+    
+      <category term="Rails" scheme="http://blog.ligan.me/categories/Rails/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[使用oh-my-zsh内置插件省略bundle exec]]></title>
     <link href="http://blog.ligan.me/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/"/>
     <id>http://blog.ligan.me/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/</id>
     <published>2014-03-02T04:09:23.000Z</published>
-    <updated>2014-12-07T15:39:15.000Z</updated>
+    <updated>2014-12-12T00:50:59.000Z</updated>
     <content type="html"><![CDATA[<h2 id="bundle_exec">bundle exec</h2>
 <p>在使用bundler管理的项目中,为了统一使用环境,经常要使用<code>bundle exec</code>来执行项目中的各种命令.</p>
 <p>比如在某些项目中使用的是rake 0.9而系统中安装有rake 10时候如果不加上<code>bundle exec</code>就会提示错误.这时候就需要执行</p>
@@ -51,7 +111,7 @@
     <link href="http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/"/>
     <id>http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/</id>
     <published>2013-09-08T07:55:00.000Z</published>
-    <updated>2014-12-07T15:39:15.000Z</updated>
+    <updated>2014-12-12T00:50:59.000Z</updated>
     <content type="html"><![CDATA[<h2 id="feature_spec与request_spec的区别">feature spec与request spec的区别</h2>
 <p>rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.</p>
 <p>feature spec在测试中来说是比较高等级的测试.大概相当于集成测试或者更高级别的用户/验收测试.一般是模拟用户的实际操作和应用外部的请求来执行测试.简单来说就是模拟浏览器中的动作,期待应用正确的反应.</p>
@@ -125,7 +185,7 @@
     <link href="http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/"/>
     <id>http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/</id>
     <published>2013-09-04T17:42:00.000Z</published>
-    <updated>2014-12-07T15:39:15.000Z</updated>
+    <updated>2014-12-12T00:50:59.000Z</updated>
     <content type="html"><![CDATA[<h2 id="rvm一个重要的功能_gemset">rvm一个重要的功能 gemset</h2>
 <p>rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势.</p>
 <p><strong>gemset本身有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv.</strong>而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.</p>
@@ -180,7 +240,7 @@
     <link href="http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/"/>
     <id>http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/</id>
     <published>2013-01-06T14:01:00.000Z</published>
-    <updated>2014-12-07T15:39:15.000Z</updated>
+    <updated>2014-12-12T00:50:59.000Z</updated>
     <content type="html"><![CDATA[<p>以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。例如</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pandoc <span class="keyword">list</span>.markdown -<span class="keyword">t</span> html -<span class="keyword">o</span> <span class="keyword">list</span>.markdown.html</div></pre></td></tr></table></figure>
 
@@ -208,7 +268,7 @@
     <link href="http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/"/>
     <id>http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/</id>
     <published>2013-01-03T11:51:00.000Z</published>
-    <updated>2014-12-07T15:39:15.000Z</updated>
+    <updated>2014-12-12T00:50:59.000Z</updated>
     <content type="html"><![CDATA[<h2 id="2012_过去了">2012 过去了</h2>
 <p>世界末日没来，依然没有成为高富帅，被逼着裸婚了，学习没有长进，又浪费了一年.</p>
 <h2 id="2013_也立个目标吧">2013 也立个目标吧</h2>
@@ -232,7 +292,7 @@
     <link href="http://blog.ligan.me/2012/10/01/first-blood/"/>
     <id>http://blog.ligan.me/2012/10/01/first-blood/</id>
     <published>2012-10-01T13:50:00.000Z</published>
-    <updated>2014-12-07T15:36:42.000Z</updated>
+    <updated>2014-12-12T00:50:59.000Z</updated>
     <content type="html"><![CDATA[<p>卖个萌,over</p>
 ]]></content>
     
