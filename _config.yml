@@ -107,5 +107,5 @@ deploy:
   type: git
   master: github
   repo:
-    github: git@github.com:flypiggy/flypiggy.github.com.git,master
+    github: git@github.com:flypiggy/flypiggy.github.io.git,master
     gitcafe: git@gitcafe.com:flypiggy/flypiggy.git,gitcafe-pages
