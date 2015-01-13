@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Programming (cdr (life))]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.ligan.me/"/>
-  <updated>2014-12-16T15:59:51.367Z</updated>
+  <updated>2015-01-13T16:31:10.137Z</updated>
   <id>http://blog.ligan.me/</id>
   
   <author>
@@ -15,11 +15,38 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[一个简单的评论过滤系统的实现]]></title>
+    <link href="http://blog.ligan.me/2015/01/13/a-simple-comments-spam-system/"/>
+    <id>http://blog.ligan.me/2015/01/13/a-simple-comments-spam-system/</id>
+    <published>2015-01-13T15:28:32.000Z</published>
+    <updated>2015-01-13T16:29:46.000Z</updated>
+    <content type="html"><![CDATA[<p>最近公园网站开启匿名评论之后, 垃圾评论就一直是一个让人头疼的问题. 关键词过滤及限制评论数很容易被找到针对的办法, 发垃圾评论的人会不停的通过空格, 符号等来绕过关键词的过滤. 对于一个每天评论不过百的网站来说, 上 <a href="http://en.wikipedia.org/wiki/Natural_language_processing" target="_blank" rel="external">NLP</a> 又太重了(其实是不懂).</p>
+<h2 id="通过语句相似度过滤垃圾评论">通过语句相似度过滤垃圾评论</h2>
+<p>后来我想到公园网站的垃圾评论大部分内容都是几个垃圾评论的变种, 内容的相似度都比较高. 所以我只需要维护一个包含这几个内容的列表, 并计算语句的相似度, 屏蔽掉相似度较高的评论就可以暂时达到过滤垃圾评论的目的.</p>
+<p>研究如何计算过程中我找到了2种方式, <a href="http://en.wikipedia.org/wiki/Levenshtein_distance" target="_blank" rel="external">Levenshtein distance</a> 以及 <a href="http://www.catalysoft.com/articles/StrikeAMatch.html" target="_blank" rel="external">How to Strike a Match</a> . 最后我使用了后者计算相似度的方式实现了一个简单的评论过滤系统.</p>
+<h2 id="代码实现">代码实现</h2>
+<p><a href="https://github.com/threedaymonk/text" target="_blank" rel="external">text</a>这个gem 同时提供了以上两种算法. 有兴趣的可以看一下源码中两种算法的具体实现.</p>
+<p>Comment 中验证评论是否合法</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class Comment &lt; ActiveRecord::Base</div><div class="line">  ...</div><div class="line">  validate :check_spam</div><div class="line">  ...</div><div class="line"> </div><div class="line">  def check_spam</div><div class="line">    <span class="comment">#遍历检查 spam 中条目与评论的相似度, 如果大于设定比例则添加 error, 验证失败</span></div><div class="line">    Spam.all.<span class="keyword">each</span> <span class="built_in">do</span> |spam|</div><div class="line">      <span class="keyword">if</span> Text::WhiteSimilarity.<span class="built_in">new</span>.similarity(body, spam.body) &gt; (spam.similarity || <span class="number">0.9</span>)</div><div class="line">        errors.<span class="built_in">add</span>(:body, <span class="string">"内容不合法"</span>)</div><div class="line">        <span class="constant">return</span></div><div class="line">      <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="comment"># 对于 spam 中没有收录的模板或漏网之鱼检查评论与最近的3条评论的相似度</span></div><div class="line">    <span class="comment"># 如果相似度大于95%则过滤, 一般垃圾评论都是连续刷评论的.</span></div><div class="line">    Comment.<span class="keyword">last</span>(<span class="number">3</span>).<span class="keyword">each</span> <span class="built_in">do</span> |comment|</div><div class="line">      <span class="keyword">if</span> Text::WhiteSimilarity.<span class="built_in">new</span>.similarity(body, comment.body) &gt; <span class="number">0.95</span></div><div class="line">        errors.<span class="built_in">add</span>(:body, <span class="string">"内容不合法"</span>)</div><div class="line">        <span class="constant">return</span></div><div class="line">      <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="function"><span class="keyword">end</span></span></div><div class="line">  <span class="function"><span class="keyword">end</span>  </span></div><div class="line"><span class="function"><span class="keyword">end</span></span></div></pre></td></tr></table></figure>
+
+<p>加上这层防护之后, 应该可以暂时安心了.</p>
+]]></content>
+    
+    
+      <category term="rails" scheme="http://blog.ligan.me/tags/rails/"/>
+    
+      <category term="ruby" scheme="http://blog.ligan.me/tags/ruby/"/>
+    
+      <category term="Rails" scheme="http://blog.ligan.me/categories/Rails/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[CSRF and protect_from_forgery in Rails 4]]></title>
     <link href="http://blog.ligan.me/2014/12/08/CSRF-and-protect-from-forgery-in-rails-4/"/>
     <id>http://blog.ligan.me/2014/12/08/CSRF-and-protect-from-forgery-in-rails-4/</id>
     <published>2014-12-07T16:20:31.000Z</published>
-    <updated>2014-12-12T00:50:59.000Z</updated>
+    <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<p>最近的一个项目<a href="http://innoawards.geekpark.net/" target="_blank" rel="external">2014中国互联网创新评选</a>频繁出现恼人的 InvalidAuthenticityToken 错误, 引发了我对 Rails 中 protect_from_forgery 的思考, 本文介绍 CSRF 攻击以及在 Rails 中的保护方式, 什么情况下应该使用那种策略来防CSRF.</p>
 <h2 id="CSRF">CSRF</h2>
 <p>CSRF（Cross-site request forgery) 跨站请求伪造, 是一种比较常见的入侵方式. 顾名思义, 就是伪造成某个受信任的用户去向网站发送请求, 来达到某些目的. 比如伪造成你向网站提交一个修改密码的表单, 将你的密码改为攻击者设定的某个密码, 这样在不知不觉中你的密码就被修改了, 而假设攻击者同时也知道你的用户名, 这样攻击者盗取了你的帐号. </p>
@@ -79,7 +106,7 @@
     <link href="http://blog.ligan.me/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/"/>
     <id>http://blog.ligan.me/2014/03/02/shi-yong-oh-my-zshnei-zhi-cha-jian-sheng-lue-bundle-exec/</id>
     <published>2014-03-02T04:09:23.000Z</published>
-    <updated>2014-12-12T00:50:59.000Z</updated>
+    <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<h2 id="bundle_exec">bundle exec</h2>
 <p>在使用bundler管理的项目中,为了统一使用环境,经常要使用<code>bundle exec</code>来执行项目中的各种命令.</p>
 <p>比如在某些项目中使用的是rake 0.9而系统中安装有rake 10时候如果不加上<code>bundle exec</code>就会提示错误.这时候就需要执行</p>
@@ -111,7 +138,7 @@
     <link href="http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/"/>
     <id>http://blog.ligan.me/2013/09/08/rspec-feature-ce-shi-jian-jie/</id>
     <published>2013-09-08T07:55:00.000Z</published>
-    <updated>2014-12-12T00:50:59.000Z</updated>
+    <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<h2 id="feature_spec与request_spec的区别">feature spec与request spec的区别</h2>
 <p>rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.</p>
 <p>feature spec在测试中来说是比较高等级的测试.大概相当于集成测试或者更高级别的用户/验收测试.一般是模拟用户的实际操作和应用外部的请求来执行测试.简单来说就是模拟浏览器中的动作,期待应用正确的反应.</p>
@@ -185,7 +212,7 @@
     <link href="http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/"/>
     <id>http://blog.ligan.me/2013/09/05/using-rvm-manage-your-gems/</id>
     <published>2013-09-04T17:42:00.000Z</published>
-    <updated>2014-12-12T00:50:59.000Z</updated>
+    <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<h2 id="rvm一个重要的功能_gemset">rvm一个重要的功能 gemset</h2>
 <p>rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势.</p>
 <p><strong>gemset本身有很大争议,很多人认为gem的管理交给bundler去做就足够好了,因此使用rbenv.</strong>而我认为gemset相对来说还是比较方便.通过对gem的物理隔离,从而在批量操作gem时候更加放心.比如我曾经手贱使用bundle update升级了所有的gem,之后在给别人演示rails的时候突然惊讶的发现rails版本升到了4.0而吓出一身冷汗 （还没有接触过4.0,还好那次没有出什么丑 ）.</p>
@@ -240,7 +267,7 @@
     <link href="http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/"/>
     <id>http://blog.ligan.me/2013/01/06/zsh-alias-with-parameters/</id>
     <published>2013-01-06T14:01:00.000Z</published>
-    <updated>2014-12-12T00:50:59.000Z</updated>
+    <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<p>以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。例如</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pandoc <span class="keyword">list</span>.markdown -<span class="keyword">t</span> html -<span class="keyword">o</span> <span class="keyword">list</span>.markdown.html</div></pre></td></tr></table></figure>
 
@@ -268,7 +295,7 @@
     <link href="http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/"/>
     <id>http://blog.ligan.me/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/</id>
     <published>2013-01-03T11:51:00.000Z</published>
-    <updated>2014-12-12T00:50:59.000Z</updated>
+    <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<h2 id="2012_过去了">2012 过去了</h2>
 <p>世界末日没来，依然没有成为高富帅，被逼着裸婚了，学习没有长进，又浪费了一年.</p>
 <h2 id="2013_也立个目标吧">2013 也立个目标吧</h2>
@@ -292,7 +319,7 @@
     <link href="http://blog.ligan.me/2012/10/01/first-blood/"/>
     <id>http://blog.ligan.me/2012/10/01/first-blood/</id>
     <published>2012-10-01T13:50:00.000Z</published>
-    <updated>2014-12-12T00:50:59.000Z</updated>
+    <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<p>卖个萌,over</p>
 ]]></content>
     

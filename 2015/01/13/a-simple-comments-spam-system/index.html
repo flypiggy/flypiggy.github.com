@@ -4,18 +4,20 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>First Blood | Gavin&#39;s Blog</title>
+    <title>一个简单的评论过滤系统的实现 | Gavin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Gavin">
     
-    <meta name="description" content="卖个萌,over">
+    <meta name="description" itemprop="description" content="网站开启匿名评论之后, 垃圾评论就一直是一个让人头疼的问题. 关键词过滤及限制评论数很容易被找到针对的办法, 上 NLP 又太重. 最后使用了语句的相似度检查来完成一个简单的评论过滤系统.">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="flypiggys" />
-    <meta name="twitter:title" content="First Blood | Gavin&#39;s Blog" />
+    <meta name="twitter:title" content="一个简单的评论过滤系统的实现 | Gavin&#39;s Blog" />
+      
+        <meta name="twitter:description" content="网站开启匿名评论之后, 垃圾评论就一直是一个让人头疼的问题. 关键词过滤及限制评论数很容易被找到针对的办法, 上 NLP 又太重. 最后使用了语句的相似度检查来完成一个简单的评论过滤系统." />
       
     
     
@@ -72,15 +74,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2012/10/01/first-blood/" title="First Blood" itemprop="url">First Blood</a>
+      <a href="/2015/01/13/a-simple-comments-spam-system/" title="一个简单的评论过滤系统的实现" itemprop="url">一个简单的评论过滤系统的实现</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://blog.ligan.me" title="Gavin">Gavin</a>
     </p>
   <p class="article-time">
-    <time datetime="2012-10-01T13:50:00.000Z" itemprop="datePublished">Oct 1 2012</time>
-    Updated:<time datetime="2015-01-13T16:29:45.000Z" itemprop="dateModified">Jan 14 2015</time>
+    <time datetime="2015-01-13T15:28:32.000Z" itemprop="datePublished">Jan 13 2015</time>
+    Updated:<time datetime="2015-01-13T16:29:46.000Z" itemprop="dateModified">Jan 14 2015</time>
     
   </p>
 </header>
@@ -89,30 +91,39 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#通过语句相似度过滤垃圾评论"><span class="toc-number">1.</span> <span class="toc-text">通过语句相似度过滤垃圾评论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实现"><span class="toc-number">2.</span> <span class="toc-text">代码实现</span></a></li></ol>
 		</div>
 		
-		<p>卖个萌,over</p>
+		<p>最近公园网站开启匿名评论之后, 垃圾评论就一直是一个让人头疼的问题. 关键词过滤及限制评论数很容易被找到针对的办法, 发垃圾评论的人会不停的通过空格, 符号等来绕过关键词的过滤. 对于一个每天评论不过百的网站来说, 上 <a href="http://en.wikipedia.org/wiki/Natural_language_processing" target="_blank" rel="external">NLP</a> 又太重了(其实是不懂).</p>
+<h2 id="通过语句相似度过滤垃圾评论">通过语句相似度过滤垃圾评论</h2>
+<p>后来我想到公园网站的垃圾评论大部分内容都是几个垃圾评论的变种, 内容的相似度都比较高. 所以我只需要维护一个包含这几个内容的列表, 并计算语句的相似度, 屏蔽掉相似度较高的评论就可以暂时达到过滤垃圾评论的目的.</p>
+<p>研究如何计算过程中我找到了2种方式, <a href="http://en.wikipedia.org/wiki/Levenshtein_distance" target="_blank" rel="external">Levenshtein distance</a> 以及 <a href="http://www.catalysoft.com/articles/StrikeAMatch.html" target="_blank" rel="external">How to Strike a Match</a> . 最后我使用了后者计算相似度的方式实现了一个简单的评论过滤系统.</p>
+<h2 id="代码实现">代码实现</h2>
+<p><a href="https://github.com/threedaymonk/text" target="_blank" rel="external">text</a>这个gem 同时提供了以上两种算法. 有兴趣的可以看一下源码中两种算法的具体实现.</p>
+<p>Comment 中验证评论是否合法</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class Comment &lt; ActiveRecord::Base</div><div class="line">  ...</div><div class="line">  validate :check_spam</div><div class="line">  ...</div><div class="line"> </div><div class="line">  def check_spam</div><div class="line">    <span class="comment">#遍历检查 spam 中条目与评论的相似度, 如果大于设定比例则添加 error, 验证失败</span></div><div class="line">    Spam.all.<span class="keyword">each</span> <span class="built_in">do</span> |spam|</div><div class="line">      <span class="keyword">if</span> Text::WhiteSimilarity.<span class="built_in">new</span>.similarity(body, spam.body) &gt; (spam.similarity || <span class="number">0.9</span>)</div><div class="line">        errors.<span class="built_in">add</span>(:body, <span class="string">"内容不合法"</span>)</div><div class="line">        <span class="constant">return</span></div><div class="line">      <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="comment"># 对于 spam 中没有收录的模板或漏网之鱼检查评论与最近的3条评论的相似度</span></div><div class="line">    <span class="comment"># 如果相似度大于95%则过滤, 一般垃圾评论都是连续刷评论的.</span></div><div class="line">    Comment.<span class="keyword">last</span>(<span class="number">3</span>).<span class="keyword">each</span> <span class="built_in">do</span> |comment|</div><div class="line">      <span class="keyword">if</span> Text::WhiteSimilarity.<span class="built_in">new</span>.similarity(body, comment.body) &gt; <span class="number">0.95</span></div><div class="line">        errors.<span class="built_in">add</span>(:body, <span class="string">"内容不合法"</span>)</div><div class="line">        <span class="constant">return</span></div><div class="line">      <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="function"><span class="keyword">end</span></span></div><div class="line">  <span class="function"><span class="keyword">end</span>  </span></div><div class="line"><span class="function"><span class="keyword">end</span></span></div></pre></td></tr></table></figure>
+
+<p>加上这层防护之后, 应该可以暂时安心了.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/闲聊/">闲聊</a>
+  <span></span> <a href="/tags/rails/">rails</a><a href="/tags/ruby/">ruby</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/闲聊/">闲聊</a>
+  <a class="article-category-link" href="/categories/Rails/">Rails</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://blog.ligan.me/2012/10/01/first-blood/" data-title="First Blood | Gavin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://blog.ligan.me/2015/01/13/a-simple-comments-spam-system/" data-title="一个简单的评论过滤系统的实现 | Gavin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -121,14 +132,14 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2013/01/03/jiu-zhe-yao-dao-liao-2013nian-liao/" title="就这么到了2013年了">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  就这么到了2013年了</span>
+
+<div class="next">
+<a href="/2014/12/08/CSRF-and-protect-from-forgery-in-rails-4/"  title="CSRF and protect_from_forgery in Rails 4">
+ <strong>NEXT:</strong><br/> 
+ <span>CSRF and protect_from_forgery in Rails 4
+</span>
 </a>
 </div>
-
 
 </nav>
 
