@@ -18,7 +18,7 @@ description: 网站开启匿名评论之后, 垃圾评论就一直是一个让�
 
 Comment 中验证评论是否合法
 
-```
+```ruby
 class Comment < ActiveRecord::Base
   ...
   validate :check_spam
