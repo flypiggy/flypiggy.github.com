@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Programming (cdr (life))]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.ligan.me/"/>
-  <updated>2015-01-13T16:31:10.137Z</updated>
+  <updated>2015-01-13T16:34:11.456Z</updated>
   <id>http://blog.ligan.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.ligan.me/2015/01/13/a-simple-comments-spam-system/"/>
     <id>http://blog.ligan.me/2015/01/13/a-simple-comments-spam-system/</id>
     <published>2015-01-13T15:28:32.000Z</published>
-    <updated>2015-01-13T16:29:46.000Z</updated>
+    <updated>2015-01-13T16:32:54.000Z</updated>
     <content type="html"><![CDATA[<p>最近公园网站开启匿名评论之后, 垃圾评论就一直是一个让人头疼的问题. 关键词过滤及限制评论数很容易被找到针对的办法, 发垃圾评论的人会不停的通过空格, 符号等来绕过关键词的过滤. 对于一个每天评论不过百的网站来说, 上 <a href="http://en.wikipedia.org/wiki/Natural_language_processing" target="_blank" rel="external">NLP</a> 又太重了(其实是不懂).</p>
 <h2 id="通过语句相似度过滤垃圾评论">通过语句相似度过滤垃圾评论</h2>
 <p>后来我想到公园网站的垃圾评论大部分内容都是几个垃圾评论的变种, 内容的相似度都比较高. 所以我只需要维护一个包含这几个内容的列表, 并计算语句的相似度, 屏蔽掉相似度较高的评论就可以暂时达到过滤垃圾评论的目的.</p>
@@ -36,6 +36,8 @@
       <category term="rails" scheme="http://blog.ligan.me/tags/rails/"/>
     
       <category term="ruby" scheme="http://blog.ligan.me/tags/ruby/"/>
+    
+      <category term="垃圾评论" scheme="http://blog.ligan.me/tags/%E5%9E%83%E5%9C%BE%E8%AF%84%E8%AE%BA/"/>
     
       <category term="Rails" scheme="http://blog.ligan.me/categories/Rails/"/>
     
