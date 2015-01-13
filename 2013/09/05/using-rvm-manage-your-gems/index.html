@@ -105,13 +105,13 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">╭─Gavin<span class="property">@ligan</span>  ~ ‹ruby-<span class="number">2.0</span><span class="number">.0</span>›</div><div class="line">╰─$ rvm use <span class="number">2.0</span><span class="property">@rails4</span> --<span class="reserved">default</span></div><div class="line"> Using <span class="regexp">/Users/Gavin/</span>.rvm/gems/ruby-<span class="number">2.0</span><span class="number">.0</span>-p247 <span class="reserved">with</span> gemset rails4</div></pre></td></tr></table></figure>
 
 <p>以上命令可以简化为</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$ </span>rvm <span class="keyword">use</span> <span class="number">2.0</span><span class="variable">@rails4</span> --create --default</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">$</span> <span class="comment">rvm</span> <span class="comment">use</span> <span class="comment">2</span><span class="string">.</span><span class="comment">0@rails4</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">default</span></div></pre></td></tr></table></figure>
 
 <p>我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看<a href="http://rvm.io/" target="_blank" rel="external">文档</a></p>
 <h2 id="项目中的gemset使用">项目中的gemset使用</h2>
 <p>我们有了不同的gemset,目的就是为了区分不同项目中不同的环境.在不同的项目中我们可以通过rvmrc, gemfile, ruby-version等来使rvm自动切换到项目当前所需要的环境中.</p>
 <p>rvm 1.11之前只支持在项目中添加.rvmrc的方式来切换rvm环境,而在1.22之后则建议使用</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rvm --<span class="keyword">ruby</span>-<span class="keyword">version</span> use <span class="number">2.0</span>@rails4</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rvm --ruby-<span class="keyword">version</span> use <span class="number">2.0</span><span class="keyword">@rails4</span></div></pre></td></tr></table></figure>
 
 <p>这样rvm会同时在项目中创建.ruby-version以及.ruby-gemset文件来标识该项目所使用的ruby版本及gemset.同时<strong>这种方式所生成的ruby版本信息同样被rbenv等工具所支持</strong></p>
 <p>完成了以上工作之后我们再进入项目文件夹时,ruby版本及gemset就会自动切换到该项目的依赖环境下,相当于执行了一次<code>rvm use 2.0@rails4</code>,而退出该项目文件夹后则会回复默认ruby版本及gemset.</p>
@@ -123,7 +123,7 @@
 <p>rvm中gemset除了default之外,还有一个global gemset.当前ruby版本下,所有的gemset都会继承global这个gemset下的所有gem.每个ruby版本又分别有一个global,default,以及自己创建的gemset.各ruby版本之间相互独立.上面还有一个所有版本公用的global gemset.</p>
 <p>有了global这个gemset之后,我们就可以把一些每个gemset都要用,又不想重复安装的gem统统放入global这个gemset中,比如rake, pry, bundler之类.</p>
 <p>可以通过编辑 ~/.rvm/gemsets/global.gems,加入</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">bundler</span></div><div class="line">awesome_print</div><div class="line">pry</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bundler</div><div class="line">awesome_print</div><div class="line">pry</div></pre></td></tr></table></figure>
 
 <p>这样每次安装新的ruby版本时,该版本ruby的global下都会自动安装好以上几个gem</p>
 <h2 id="说了这么多我就是不想用gemset">说了这么多我就是不想用gemset</h2>

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Programming (cdr (life))]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.ligan.me/"/>
-  <updated>2015-01-13T16:36:39.509Z</updated>
+  <updated>2015-01-13T17:27:02.072Z</updated>
   <id>http://blog.ligan.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.ligan.me/2015/01/13/a-simple-comments-spam-system/"/>
     <id>http://blog.ligan.me/2015/01/13/a-simple-comments-spam-system/</id>
     <published>2015-01-13T15:28:32.000Z</published>
-    <updated>2015-01-13T16:32:54.000Z</updated>
+    <updated>2015-01-13T17:26:56.000Z</updated>
     <content type="html"><![CDATA[<p>最近公园网站开启匿名评论之后, 垃圾评论就一直是一个让人头疼的问题. 关键词过滤及限制评论数很容易被找到针对的办法, 发垃圾评论的人会不停的通过空格, 符号等来绕过关键词的过滤. 对于一个每天评论不过百的网站来说, 上 <a href="http://en.wikipedia.org/wiki/Natural_language_processing" target="_blank" rel="external">NLP</a> 又太重了(其实是不懂).</p>
 <h2 id="通过语句相似度过滤垃圾评论">通过语句相似度过滤垃圾评论</h2>
 <p>后来我想到公园网站的垃圾评论大部分内容都是几个垃圾评论的变种, 内容的相似度都比较高. 所以我只需要维护一个包含这几个内容的列表, 并计算语句的相似度, 屏蔽掉相似度较高的评论就可以暂时达到过滤垃圾评论的目的.</p>
@@ -27,11 +27,14 @@
 <h2 id="代码实现">代码实现</h2>
 <p><a href="https://github.com/threedaymonk/text" target="_blank" rel="external">text</a>这个gem 同时提供了以上两种算法. 有兴趣的可以看一下源码中两种算法的具体实现.</p>
 <p>Comment 中验证评论是否合法</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class Comment &lt; ActiveRecord::Base</div><div class="line">  ...</div><div class="line">  validate :check_spam</div><div class="line">  ...</div><div class="line"> </div><div class="line">  def check_spam</div><div class="line">    <span class="comment">#遍历检查 spam 中条目与评论的相似度, 如果大于设定比例则添加 error, 验证失败</span></div><div class="line">    Spam.all.<span class="keyword">each</span> <span class="built_in">do</span> |spam|</div><div class="line">      <span class="keyword">if</span> Text::WhiteSimilarity.<span class="built_in">new</span>.similarity(body, spam.body) &gt; (spam.similarity || <span class="number">0.9</span>)</div><div class="line">        errors.<span class="built_in">add</span>(:body, <span class="string">"内容不合法"</span>)</div><div class="line">        <span class="constant">return</span></div><div class="line">      <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="comment"># 对于 spam 中没有收录的模板或漏网之鱼检查评论与最近的3条评论的相似度</span></div><div class="line">    <span class="comment"># 如果相似度大于95%则过滤, 一般垃圾评论都是连续刷评论的.</span></div><div class="line">    Comment.<span class="keyword">last</span>(<span class="number">3</span>).<span class="keyword">each</span> <span class="built_in">do</span> |comment|</div><div class="line">      <span class="keyword">if</span> Text::WhiteSimilarity.<span class="built_in">new</span>.similarity(body, comment.body) &gt; <span class="number">0.95</span></div><div class="line">        errors.<span class="built_in">add</span>(:body, <span class="string">"内容不合法"</span>)</div><div class="line">        <span class="constant">return</span></div><div class="line">      <span class="function"><span class="keyword">end</span></span></div><div class="line">    <span class="function"><span class="keyword">end</span></span></div><div class="line">  <span class="function"><span class="keyword">end</span>  </span></div><div class="line"><span class="function"><span class="keyword">end</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span> <span class="inheritance">&lt; <span class="parent">ActiveRecord::Base</span></span></span></div><div class="line">  ...</div><div class="line">  validate <span class="symbol">:check_spam</span></div><div class="line">  ...</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">def</span> </span>check_spam</div><div class="line">    <span class="comment">#遍历检查 spam 中条目与评论的相似度, 如果大于设定比例则添加 error, 验证失败</span></div><div class="line">    <span class="constant">Spam</span>.all.each <span class="keyword">do</span> |spam|</div><div class="line">      <span class="keyword">if</span> <span class="constant">Text::WhiteSimilarity</span>.new.similarity(body, spam.body) &gt; (spam.similarity || <span class="number">0</span>.<span class="number">9</span>)</div><div class="line">        errors.add(<span class="symbol">:body</span>, <span class="string">"内容不合法"</span>)</div><div class="line">        <span class="keyword">return</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">    <span class="comment"># 对于 spam 中没有收录的模板或漏网之鱼检查评论与最近的3条评论的相似度</span></div><div class="line">    <span class="comment"># 如果相似度大于95%则过滤, 一般垃圾评论都是连续刷评论的.</span></div><div class="line">    <span class="constant">Comment</span>.last(<span class="number">3</span>).each <span class="keyword">do</span> |comment|</div><div class="line">      <span class="keyword">if</span> <span class="constant">Text::WhiteSimilarity</span>.new.similarity(body, comment.body) &gt; <span class="number">0</span>.<span class="number">95</span></div><div class="line">        errors.add(<span class="symbol">:body</span>, <span class="string">"内容不合法"</span>)</div><div class="line">        <span class="keyword">return</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span>  </div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 
 <p>加上这层防护之后, 应该可以暂时安心了.</p>
 ]]></content>
+    <summary type="html">
+    <![CDATA[网站开启匿名评论之后, 垃圾评论就一直是一个让人头疼的问题. 关键词过滤及限制评论数很容易被找到针对的办法, 上 NLP 又太重. 最后使用了语句的相似度检查来完成一个简单的评论过滤系统.]]>
     
+    </summary>
     
       <category term="rails" scheme="http://blog.ligan.me/tags/rails/"/>
     
@@ -93,7 +96,10 @@
 <h3 id=":reset_session-1"><code>:reset_session</code></h3>
 <p>这个用的比较少, 使用情况参照<code>:null_session</code></p>
 ]]></content>
+    <summary type="html">
+    <![CDATA[最近的一个项目频繁出现恼人的 InvalidAuthenticityToken 错误, 引发了我对 Rails 中 protect_from_forgery 的思考, 本文介绍 CSRF 攻击以及在 Rails 中的保护方式, 什么情况下应该使用那种策略来防CSRF.]]>
     
+    </summary>
     
       <category term="rails" scheme="http://blog.ligan.me/tags/rails/"/>
     
@@ -125,7 +131,10 @@
 <p>plugins中加入bundler,绝大部分情况下就不需要再手动敲上<code>bundle exec</code>了.</p>
 <p><a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/bundler/bundler.plugin.zsh#L9" target="_blank" rel="external">源码看这里</a></p>
 ]]></content>
+    <summary type="html">
+    <![CDATA[在oh-my-zsh中省略输入烦人的  bundle exec.]]>
     
+    </summary>
     
       <category term="ruby" scheme="http://blog.ligan.me/tags/ruby/"/>
     
@@ -153,7 +162,7 @@
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">group <span class="symbol">:development</span>, <span class="symbol">:test</span> <span class="keyword">do</span></div><div class="line">  gem <span class="string">'rspec-rails'</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">group <span class="symbol">:test</span> <span class="keyword">do</span></div><div class="line">  gem <span class="string">'capybara'</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 
 <p>之后执行</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bundle <span class="operator"><span class="keyword">install</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bundle <span class="keyword">install</span></div></pre></td></tr></table></figure>
 
 <p>再之后执行</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">rails</span> <span class="tag">generate</span> <span class="tag">rspec</span><span class="pseudo">:install</span></div></pre></td></tr></table></figure>
@@ -195,7 +204,10 @@
 
 <p>feature spec的简单介绍就写到这里,希望大家喜欢这种方式.</p>
 ]]></content>
+    <summary type="html">
+    <![CDATA[rspec和capybara在ruby程序员中很多人都不陌生了.在2.0版本以后的capybara中,新加入了feature spec的写法.在rspec中默认使用spec/feature,而不再使用spec/request.]]>
     
+    </summary>
     
       <category term="测试" scheme="http://blog.ligan.me/tags/%E6%B5%8B%E8%AF%95/"/>
     
@@ -226,13 +238,13 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">╭─Gavin<span class="property">@ligan</span>  ~ ‹ruby-<span class="number">2.0</span><span class="number">.0</span>›</div><div class="line">╰─$ rvm use <span class="number">2.0</span><span class="property">@rails4</span> --<span class="reserved">default</span></div><div class="line"> Using <span class="regexp">/Users/Gavin/</span>.rvm/gems/ruby-<span class="number">2.0</span><span class="number">.0</span>-p247 <span class="reserved">with</span> gemset rails4</div></pre></td></tr></table></figure>
 
 <p>以上命令可以简化为</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$ </span>rvm <span class="keyword">use</span> <span class="number">2.0</span><span class="variable">@rails4</span> --create --default</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">$</span> <span class="comment">rvm</span> <span class="comment">use</span> <span class="comment">2</span><span class="string">.</span><span class="comment">0@rails4</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">default</span></div></pre></td></tr></table></figure>
 
 <p>我们还可以对gemset进行删除,切换,导入导出,清空,升级等操作,具体请查看<a href="http://rvm.io/" target="_blank" rel="external">文档</a></p>
 <h2 id="项目中的gemset使用">项目中的gemset使用</h2>
 <p>我们有了不同的gemset,目的就是为了区分不同项目中不同的环境.在不同的项目中我们可以通过rvmrc, gemfile, ruby-version等来使rvm自动切换到项目当前所需要的环境中.</p>
 <p>rvm 1.11之前只支持在项目中添加.rvmrc的方式来切换rvm环境,而在1.22之后则建议使用</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rvm --<span class="keyword">ruby</span>-<span class="keyword">version</span> use <span class="number">2.0</span>@rails4</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rvm --ruby-<span class="keyword">version</span> use <span class="number">2.0</span><span class="keyword">@rails4</span></div></pre></td></tr></table></figure>
 
 <p>这样rvm会同时在项目中创建.ruby-version以及.ruby-gemset文件来标识该项目所使用的ruby版本及gemset.同时<strong>这种方式所生成的ruby版本信息同样被rbenv等工具所支持</strong></p>
 <p>完成了以上工作之后我们再进入项目文件夹时,ruby版本及gemset就会自动切换到该项目的依赖环境下,相当于执行了一次<code>rvm use 2.0@rails4</code>,而退出该项目文件夹后则会回复默认ruby版本及gemset.</p>
@@ -244,7 +256,7 @@
 <p>rvm中gemset除了default之外,还有一个global gemset.当前ruby版本下,所有的gemset都会继承global这个gemset下的所有gem.每个ruby版本又分别有一个global,default,以及自己创建的gemset.各ruby版本之间相互独立.上面还有一个所有版本公用的global gemset.</p>
 <p>有了global这个gemset之后,我们就可以把一些每个gemset都要用,又不想重复安装的gem统统放入global这个gemset中,比如rake, pry, bundler之类.</p>
 <p>可以通过编辑 ~/.rvm/gemsets/global.gems,加入</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">bundler</span></div><div class="line">awesome_print</div><div class="line">pry</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bundler</div><div class="line">awesome_print</div><div class="line">pry</div></pre></td></tr></table></figure>
 
 <p>这样每次安装新的ruby版本时,该版本ruby的global下都会自动安装好以上几个gem</p>
 <h2 id="说了这么多我就是不想用gemset">说了这么多我就是不想用gemset</h2>
@@ -252,7 +264,10 @@
 
 <p>这样就会忽略所有的gemset信息.永远的使用默认的gemset,其他项目中的gemset信息不会对你造成困扰.</p>
 ]]></content>
+    <summary type="html">
+    <![CDATA[rvm作为一种方便的ruby安装和管理方式已经被大家所习惯和接受.但是rvm中另外一个重要的功能gemset使用率却不高.本文简单介绍一下gemset的正确使用姿势.]]>
     
+    </summary>
     
       <category term="rvm" scheme="http://blog.ligan.me/tags/rvm/"/>
     
@@ -271,20 +286,23 @@
     <published>2013-01-06T14:01:00.000Z</published>
     <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<p>以前经常加一些alias来偷懒减少输入。今天在使用pandoc转换markdown文档时也想使用alias简化输入。例如</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pandoc <span class="keyword">list</span>.markdown -<span class="keyword">t</span> html -<span class="keyword">o</span> <span class="keyword">list</span>.markdown.html</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pandoc <span class="built_in">list</span><span class="built_in">.</span>markdown <span class="attribute">-t</span> html <span class="attribute">-o</span> <span class="built_in">list</span><span class="built_in">.</span>markdown<span class="built_in">.</span>html</div></pre></td></tr></table></figure>
 
 <p>想要省掉一堆-t html -o 什么的参数，最好是我只需要输入</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">pd</span> 文件名</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd 文件名</div></pre></td></tr></table></figure>
 
 <p>就可以完成转换，zsh在alias中加参数的方法稍微有些不一样，查看zsh文档的一堆废话后（csh中怎么写的，zsh和csh不一样，balabala），在.zshrc中加入</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">pd</span></span>() { pandoc <span class="string">"<span class="variable">$1</span>"</span> -t html -o <span class="string">"<span class="variable">$1</span>"</span>.html; }</div></pre></td></tr></table></figure>
 
 <p>之后试验一下</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">╭─gavin@Gavin-PC  ~/ligan/Training/demo ‹<span class="keyword">ruby</span>-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─$ <span class="keyword">ls</span></div><div class="line"><span class="keyword">list</span>.md</div><div class="line">╭─gavin@Gavin-PC  ~/ligan/Training/demo ‹<span class="keyword">ruby</span>-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─$ pd <span class="keyword">list</span>.md</div><div class="line">╭─gavin@Gavin-PC  ~/ligan/Training/demo ‹<span class="keyword">ruby</span>-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─$ <span class="keyword">ls</span></div><div class="line"><span class="keyword">list</span>.md  <span class="keyword">list</span>.md.html</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─<span class="variable">$ </span>ls</div><div class="line">list.md</div><div class="line">╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─<span class="variable">$ </span>pd list.md</div><div class="line">╭─gavin<span class="variable">@Gavin</span>-<span class="constant">PC</span>  ~<span class="regexp">/ligan/</span><span class="constant">Training</span>/demo ‹ruby-<span class="number">1.9</span>.<span class="number">3</span>›</div><div class="line">╰─<span class="variable">$ </span>ls</div><div class="line">list.md  list.md.html</div></pre></td></tr></table></figure>
 
 <p>大功告成</p>
 ]]></content>
+    <summary type="html">
+    <![CDATA[以前经常在shell中使用alias来偷懒减少输入,今天想在zsh中加入一个带参数的alias.]]>
     
+    </summary>
     
       <category term="zsh" scheme="http://blog.ligan.me/tags/zsh/"/>
     
@@ -308,7 +326,10 @@
 </ul>
 <p>对了，还有开始写blog</p>
 ]]></content>
+    <summary type="html">
+    <![CDATA[2012 过去了,世界末日没来，依然没有成为高富帅，被逼着裸婚了，学习没有长进，又浪费了一年.]]>
     
+    </summary>
     
       <category term="闲聊" scheme="http://blog.ligan.me/tags/%E9%97%B2%E8%81%8A/"/>
     
@@ -324,7 +345,10 @@
     <updated>2015-01-13T16:29:45.000Z</updated>
     <content type="html"><![CDATA[<p>卖个萌,over</p>
 ]]></content>
-    
+    <summary type="html">
+    <![CDATA[<p>卖个萌,over</p>
+]]>
+    </summary>
     
       <category term="闲聊" scheme="http://blog.ligan.me/tags/%E9%97%B2%E8%81%8A/"/>
     
