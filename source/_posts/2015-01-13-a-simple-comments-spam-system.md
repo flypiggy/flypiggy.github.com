@@ -34,7 +34,7 @@ class Comment < ActiveRecord::Base
     end
     # 对于 spam 中没有收录的模板或漏网之鱼检查评论与最近的3条评论的相似度
     # 如果相似度大于95%则过滤, 一般垃圾评论都是连续刷评论的.
-    Comment.last(3).each do |comment|
+    new_record? and Comment.last(3).each do |comment|
       if Text::WhiteSimilarity.new.similarity(body, comment.body) > 0.95
         errors.add(:body, "内容不合法")
         return
